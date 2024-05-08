@@ -67,6 +67,7 @@ class WargaController extends Controller
         $request->validate([
             'id_jenis_pengaduan' => 'required',
             'deskripsi' => 'required',
+            'lokasi' => 'required',
             'bukti_foto' => 'required|image|mimes:jpeg,png,jpg|max:5120', // Maksimum 5MB
         ]);
 
@@ -81,6 +82,7 @@ class WargaController extends Controller
             'user_id' => $request->user_id,
             'id_jenis_pengaduan' => $request->id_jenis_pengaduan,
             'deskripsi' => $request->deskripsi,
+            'lokasi' => $request->lokasi,
             'bukti_foto' => $bukti_foto,
             'id_status_pengaduan' => $request->id_status_pengaduan,
         ]);
@@ -112,6 +114,7 @@ class WargaController extends Controller
     {
         $request->validate([
             'deskripsi' => 'required',
+            'lokasi' => 'required',
             'bukti_foto' => 'required|image|mimes:jpeg,png,jpg|max:5120', // Maksimum 5MB
         ]);
         // Simpan bukti foto ke direktori public
@@ -119,6 +122,7 @@ class WargaController extends Controller
 
         PengaduanModel::find($id)->update([
             'deskripsi' => $request->deskripsi,
+            'lokasi' => $request->lokasi,
             'bukti_foto' => $bukti_foto,
         ]);
 

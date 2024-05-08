@@ -33,6 +33,15 @@
             </div>
         </div>
         <div class="form-group row">
+            <label class="col-1 control-label col-form-label">Lokasi</label>
+            <div class="col-11">
+                <input type="text" class="form-control" id="lokasi" name="lokasi" value="{{ old('lokasi') }}" required>
+                @error('lokasi')
+                <small class="form-text text-danger">{{ $message }}</small>
+                @enderror
+            </div>
+        </div>
+        <div class="form-group row">
             <label class="col-1 control-label col-form-label">Bukti foto</label>
             <div class="col-11">
                 <input type="file" class="form-control" id="bukti_foto" name="bukti_foto" value="{{ old('bukti_foto') }}" required>

@@ -26,6 +26,10 @@
                         <td>{{ $detail->deskripsi }}</td>
                     </tr>
                     <tr>
+                        <th>Lokasi</th>
+                        <td>{{ $detail->lokasi }}</td>
+                    </tr>
+                    <tr>
                         <th>Dibuat</th>
                         <td>{{ $detail->created_at }}</td>
                     </tr>
