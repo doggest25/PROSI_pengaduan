@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Peduli Lingkungan</title>
+  <link rel="icon" href="{{ asset('adminlte/logo/page.png')}}" type="image/png">
 
   <meta name="csrf-token" content="{{ csrf_token() }}"> <!-- Untuk mengirimkan token Laravel CSRF pada setiap request ajax -->
   
@@ -36,9 +37,9 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-white-success elevation-4">
       <!-- Brand Logo -->
-      <a href="{{ url('/') }}" class="brand-link">
-          <img src="{{ asset('adminlte/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-          <span class="brand-text font-weight-light">Admin </span>
+      <a  class="brand-link">
+          <img src="{{ asset('adminlte/logo/page.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+          <span class="brand-text font-weight-light">Admin Peduli</span>
       </a>
   
       <!-- Sidebar -->

@@ -4,13 +4,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Registration Page (v2)</title>
+  <title>Peduli | Registration </title>
+  <link rel="icon" href="{{ asset('adminlte/logo/page.png')}}" type="image/png">
 </head>
 <body class="hold-transition register-page">
 <div class="register-box">
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="../../index2.html" class="h1"><b>Admin</b>LTE</a>
+
+        <img src="{{ asset('adminlte/logo/utama.png')}}" alt="Logo Peduli Lingkungan" class="h1" style="width: 200px; height: auto;">
+        
+  
     </div>
     <div class="card-body">
       <p class="login-box-msg">Register a new membership</p>
