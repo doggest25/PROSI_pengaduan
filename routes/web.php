@@ -83,7 +83,7 @@ Route::group(['middleware' => ['auth', 'cek_login:2']], function () {
 //Mengelola data warga ->warga
 Route::group(['middleware' => ['auth', 'cek_login:1']], function () {
 Route::group(['prefix' => 'warga'], function () {
-     //melakukan pengaduan
+    Route::get('/pengaduan', [WargaController::class, 'create']);//melakukan pengaduan
     Route::post('/save', [WargaController::class, 'store']);
     Route::get('/detail', [WargaController::class, 'detail']);
     Route::post('/list', [WargaController::class, 'list']);//history pengaduan individu
