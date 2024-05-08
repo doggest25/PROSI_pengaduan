@@ -36,7 +36,7 @@ class WargaController extends Controller
         ->addIndexColumn()
         ->addColumn('aksi', function ($detail) {
             $editDeleteBtns = '';
-            if ($detail->status_pengaduan->status_nama !== 'Diterima') {
+            if ($detail->status_pengaduan->status_nama !== 'Diterima' && $detail->status_pengaduan->status_nama !== 'Selesai' ) {
                 $editDeleteBtns .= '<a href="' . url('/warga/' . $detail->id_pengaduan . '/edit') . '" class="btn btn-warning btn-sm">Edit</a> ';
                 $editDeleteBtns .= '<form class="d-inline-block" method="POST" action="'. url('/warga/'.$detail->id_pengaduan).'">'.
                         csrf_field() . method_field('DELETE') .

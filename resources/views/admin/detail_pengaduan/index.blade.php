@@ -96,11 +96,13 @@
         "createdRow": function(row, data, dataIndex) {
             var status = data.status_pengaduan.status_nama;
             if (status === 'Diterima') {
-                $(row).find('td:eq(3)').html('<span class="badge badge-success">Diterima</span>');
+                $(row).find('td:eq(3)').html('<span class="badge badge-primary">Diterima</span>');
             } else if (status === 'Ditolak') {
                 $(row).find('td:eq(3)').html('<span class="badge badge-danger">Ditolak</span>');
             } else if (status === 'Diproses') {
                 $(row).find('td:eq(3)').html('<span class="badge badge-warning">Diproses</span>');
+            } else if (status === 'Selesai') {
+                $(row).find('td:eq(3)').html('<span class="badge badge-success">Selesai</span>');
             }
             
         }

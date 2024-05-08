@@ -98,13 +98,16 @@
                 var statusClass = '';
                 var statusText = '';
                 if (status === 'Diterima') {
-                    statusClass = 'badge-success';
+                    statusClass = 'badge-primary';
                     statusText = 'Diterima';
                 } else if (status === 'Ditolak') {
                     statusClass = 'badge-danger';
                     statusText = 'Ditolak';
                 } else if (status === 'Diproses') {
                     statusClass = 'badge-warning';
+                    statusText = 'Diproses';
+                }   else if (status === 'Selesai') {
+                    statusClass = 'badge-success';
                     statusText = 'Diproses';
                 }
                 $(row).find('td:eq(2)').html('<span class="badge ' + statusClass + '">' + statusText + '</span>');

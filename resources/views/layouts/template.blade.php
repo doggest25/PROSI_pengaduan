@@ -83,7 +83,7 @@
   <script src="{{ asset('adminlte/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
   <script src="{{ asset('adminlte/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
   <script src="{{ asset('adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-
+<!-- AdminLTE App -->
   <!-- AdminLTE App -->
   <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>
   <script>
@@ -95,5 +95,6 @@
     });
   </script>
   @stack('js') <!-- Digunakan untuk memanggil custom js dari perintah push('js') pada masing-masing view -->
+  
 </body>
 </html>
