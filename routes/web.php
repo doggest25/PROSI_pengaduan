@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DetailPengaduanController;
 use App\Http\Controllers\HomeController;
@@ -26,6 +27,9 @@ use Illuminate\Support\Facades\Route;
 
 //Dashboard admin
 //Route::get('/dashAdmin', [WelcomeController::class, 'index']);
+
+//About us page
+Route::get('/about', [AboutController::class, 'index']);
 
 //Mengelola data user -> Admin
 Route::group(['middleware' => ['auth', 'cek_login:2']], function () {
@@ -79,11 +83,11 @@ Route::group(['middleware' => ['auth', 'cek_login:2']], function () {
 //Mengelola data warga ->warga
 Route::group(['middleware' => ['auth', 'cek_login:1']], function () {
 Route::group(['prefix' => 'warga'], function () {
-    Route::get('/pengaduan', [WargaController::class, 'create']); //melakukan pengaduan
+     //melakukan pengaduan
     Route::post('/save', [WargaController::class, 'store']);
     Route::get('/detail', [WargaController::class, 'detail']);
     Route::post('/list', [WargaController::class, 'list']);//history pengaduan individu
-    Route::get('/{id}', [WargaController::class, 'show']); //menampilkan detail
+    Route::get('/{id}', [WargaController::class, 'show']); //menampilkan detailRoute::get('/pengaduan', [WargaController::class, 'create']);
     Route::get('/{id}/edit', [WargaController::class, 'edit']); //menampilkan halaman form edit 
     Route::put('/{id}', [WargaController::class, 'update']); //menyimpan perubahan data 
     Route::delete('/{id}', [WargaController::class, 'destroy']); //menghapus data 

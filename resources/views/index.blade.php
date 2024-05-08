@@ -33,7 +33,7 @@
     <p>Aduanmu Penting bagi kami!</p> 
     <div class="container">
       <div class="row justify-content-center button-container">
-        <a href="about.html" class="btn btn-dark  mr-2">About Us</a>
+        <a href="/about" class="btn btn-dark  mr-2">About Us</a>
         <a href="{{ url('login') }}" class="btn btn-light  ml-2">Login</a>
       </div>
     </div>
