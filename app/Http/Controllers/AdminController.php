@@ -11,7 +11,7 @@ class AdminController extends Controller
 {
     public function index(MonthlyUsersChart $chart){
         $breadcrumb = (object) [
-            'title' => 'Selamat Datang',
+            'title' => '',
             'list' => ['Home', 'Dashboard']
         ];
     
