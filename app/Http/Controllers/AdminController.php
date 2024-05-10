@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\MonthlyUsersChart;
 use App\Models\PengaduanModel;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function index(){
+    public function index(MonthlyUsersChart $chart){
         $breadcrumb = (object) [
             'title' => 'Selamat Datang',
             'list' => ['Home', 'Dashboard']
@@ -30,7 +31,7 @@ class AdminController extends Controller
 
     
         $activeMenu = 'dashboard';
-        return view('admin.dashboard.welcome', compact('lastComplaint','lastRegister','total','total2','diproses','diterima','ditolak','selesai', 'breadcrumb', 'page', 'activeMenu'));
+        return view('admin.dashboard.welcome', ['chart' => $chart->build(),'lastComplaint' => $lastComplaint,'lastRegister' => $lastRegister,'total' => $total,'total2'=> $total2,'diproses' => $diproses,'diterima' => $diterima,'ditolak' => $ditolak,'selesai' => $selesai, 'breadcrumb' => $breadcrumb, 'page' => $chart, 'activeMenu' => $activeMenu]);
     }
     
     

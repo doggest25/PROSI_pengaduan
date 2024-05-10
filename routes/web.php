@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DetailPengaduanController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JPengaduanController;
+use App\Http\Controllers\LevelController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\UserController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\WargaController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Route;
+use Monolog\Level;
 
 /*
 |--------------------------------------------------------------------------
@@ -125,6 +127,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('admin', AdminController::class);
     });
 });
+
+
+Route::get('/users', [LevelController::class, 'index']);
 
 
 

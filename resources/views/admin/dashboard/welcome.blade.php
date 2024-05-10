@@ -60,51 +60,66 @@
 </div>
 
 <div class="card card-success">
-  <div class="card-body" style="position: relative;">
-    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <div class="col-md-12 col-lg-6 col-xl-4">
-            <div class="card mb-2">
-              <img class="card-img-top" style="width: 400px;" src="{{ asset('adminlte/logo/dash-admin.jpg') }}" alt="Dist Photo 1">
-              <div class="card-img-overlay d-flex flex-column justify-content-end">
-                <h3 class="card-title text-primary text-white" style="font-size: 31px;">{{ $total2 }} Pengaduan</h3>
-                <p class="card-text text-white pb-2 pt-1">Sudah dilakukan pada aplikasi ini</p>
-                @if($lastComplaint)
-                <a href="/dpengaduan" class="text-primary"> Pengaduan Terbaru {{ Carbon\Carbon::parse($lastComplaint->created_at)->diffForHumans() }}</a>
-                @else
-                <p>Belum ada pengaduan yang dibuat.</p>
-                @endif
+  <div class="row">
+    <div class="card-body" style="position: relative;">
+      <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="col-md-12 col-lg-6 col-xl-4">
+              <div class="card mb-3">
+                <img class="card-img-top" style="width: 100%;" src="{{ asset('adminlte/logo/dash-admin.jpg') }}" alt="Dist Photo 1">
+                <div class="card-img-overlay d-flex flex-column justify-content-end">
+                  <h3 class="card-title text-primary text-white" style="font-size: 31px;">{{ $total2 }} Pengaduan</h3>
+                  <p class="card-text text-white pb-2 pt-1">Sudah dilakukan pada aplikasi ini</p>
+                  @if($lastComplaint)
+                  <a href="/dpengaduan" class="text-primary"> Pengaduan Terbaru {{ Carbon\Carbon::parse($lastComplaint->created_at)->diffForHumans() }}</a>
+                  @else
+                  <p>Belum ada pengaduan yang dibuat.</p>
+                  @endif
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="col-md-12 col-lg-6 col-xl-4">
+              <div class="card mb-3">
+               <img class="card-img-top" style="width: 100%;" src="{{ asset('adminlte/logo/dash2.jpg') }}" alt="Dist Photo 2">
+               <div class="card-img-overlay d-flex flex-column justify-content-end">
+                  <h3 class="card-title text-primary text-white" style="font-size: 31px;">{{ $total }} User Warga</h3>
+                  <p class="card-text text-white pb-2 pt-1">Sudah Mendaftar pada aplikasi ini</p>
+                 @if($lastComplaint)
+                  <a href="/dpengaduan" class="text-primary"> User Warga Terbaru {{ Carbon\Carbon::parse($lastRegister->created_at)->diffForHumans() }}</a>
+                  @else
+                  <p>Belum ada pengaduan yang dibuat.</p>
+                  @endif
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="carousel-item">
-          <div class="col-md-12 col-lg-6 col-xl-4">
-            <div class="card mb-2">
-              <img class="card-img-top" style="width: 400px;" src="{{ asset('adminlte/logo/dash2.jpg') }}" alt="Dist Photo 2">
-              <div class="card-img-overlay d-flex flex-column justify-content-end">
-                <h3 class="card-title text-primary text-white" style="font-size: 31px;">{{ $total }} User Warga</h3>
-                <p class="card-text text-white pb-2 pt-1">Sudah Mendaftar pada aplikasi ini</p>
-                @if($lastComplaint)
-                <a href="/dpengaduan" class="text-primary"> User Warga Terbaru {{ Carbon\Carbon::parse($lastRegister->created_at)->diffForHumans() }}</a>
-                @else
-                <p>Belum ada pengaduan yang dibuat.</p>
-                @endif
-              </div>
-            </div>
-          </div>
-        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev" style="left: -70px;">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next" style="right: 727px;">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev" style="left: -70px;">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next" style="right: 710px;">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
     </div>
+    <div class="h-screen bg-White-100">
+      <div class="container px-4 mx-auto">
+
+        <div class="p-6 m-20 bg-grey rounded shadow">
+            {!! $chart->container() !!}
+        </div>
+  
+      </div>
+  
+      <script src="{{ $chart->cdn() }}"></script>
+  
+        {{ $chart->script() }}
+      </div>
   </div>
 </div>
 
