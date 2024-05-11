@@ -6,7 +6,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="{{asset('temp/assets/css/main.css')}}" />
   <title>Peduli Lingkungan</title>
   <link rel="icon" href="{{ asset('adminlte/logo/page.png')}}" type="image/png">
 
@@ -54,9 +56,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- /.content-header -->
 
     <!-- Main content -->
-    
+    <div class="homepage is-preload">
+      @yield('content')
       
-        @yield('content')
+    </div>
+      
+      
         
       <!-- /.container-fluid -->
    
@@ -95,6 +100,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{ asset('adminlte/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
 <script src="{{ asset('adminlte/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 <script src="{{ asset('adminlte/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+
+      <script src="{{ asset('temp/assets/js/jquery.min.js') }} "></script>
+			<script src="{{asset('temp/assets/js/jquery.dropotron.min.js') }}"></script>
+			<script src="{{asset('temp/assets/js/browser.min.js') }}"></script>
+			<script src="{{asset('temp/assets/js/breakpoints.min.js') }}"></script>
+			<script src="{{asset('temp/assets/js/util.js') }}"></script>
+			<script src="{{asset('temp/assets/js/main.js') }}"></script>
 
 <!-- AdminLTE App -->
 <script src="{{ asset('adminlte/dist/js/adminlte.min.js') }}"></script>

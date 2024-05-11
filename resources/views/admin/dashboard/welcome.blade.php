@@ -70,9 +70,9 @@
           <div class="carousel-inner">
             <div class="carousel-item active">
               <div class="card mb-3">
-                <img class="card-img-top" style="width: 100%;" src="{{ asset('adminlte/logo/dash-admin.jpg') }}" alt="Dist Photo 1">
+                <img class="card-img-top" style="width: 100%;" src="{{ asset('adminlte/logo/dash-admin.png') }}" alt="Dist Photo 1">
                 <div class="card-img-overlay d-flex flex-column justify-content-end">
-                  <h3 class="card-title text-primary text-white" style="font-size: 31px;">{{ $total2 }} Pengaduan</h3>
+                  <h3 class="card-title text-primary text-white" style="font-size: 31px;"><strong>{{ $total2 }} Pengaduan</strong></h3>
                   <p class="card-text text-white pb-2 pt-1">Sudah dilakukan pada aplikasi ini</p>
                   @if($lastComplaint)
                   <a href="/dpengaduan" class="text-primary"> Pengaduan Terbaru {{ Carbon\Carbon::parse($lastComplaint->created_at)->diffForHumans() }}</a>
@@ -84,9 +84,9 @@
             </div>
             <div class="carousel-item">
               <div class="card mb-3">
-                <img class="card-img-top" style="width: 100%;" src="{{ asset('adminlte/logo/dash2.jpg') }}" alt="Dist Photo 2">
+                <img class="card-img-top" style="width: 100%;" src="{{ asset('adminlte/logo/dash2.png') }}" alt="Dist Photo 2">
                 <div class="card-img-overlay d-flex flex-column justify-content-end">
-                  <h3 class="card-title text-primary text-white" style="font-size: 31px;">{{ $total }} User Warga</h3>
+                  <h3 class="card-title text-primary text-white" style="font-size: 31px;"><strong>{{ $total }} User Warga</strong></h3>
                   <p class="card-text text-white pb-2 pt-1">Sudah Mendaftar pada aplikasi ini</p>
                   @if($lastComplaint)
                   <a href="/dpengaduan" class="text-primary"> User Warga Terbaru {{ Carbon\Carbon::parse($lastRegister->created_at)->diffForHumans() }}</a>

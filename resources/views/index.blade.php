@@ -10,37 +10,85 @@
   <title>Peduli Lingkungan</title>
   <link rel="icon" href="{{ asset('adminlte/logo/page.png')}}" type="image/png">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <style>
-    body, html {
-      height: 100%;
-      margin: 0;
-    }
 
-    .jumbotron {
-      background-image: url('picture/city2.jpeg');
-      background-size: cover;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      color: white;
-    }
-
-    .button-container {
-      margin-top: 20px;
-    }
-  </style>
 </head>
 <body>
-  <div class="jumbotron text-center">
-    <h1>Peduli Lingkungan</h1>
-    <p>Aduanmu Penting bagi kami!</p> 
-    <div class="container">
-      <div class="row justify-content-center button-container">
-        <a href="{{ url('login') }}" class="btn btn-light  ml-2">Login</a>
-      </div>
+    
+      
+        <img src="{{ asset('adminlte/logo/landing1.png')}}" class="card-img-top mx-auto d-block" alt="..." style="width: 50%">
+        <div class="card-body text-center">
+            <div class="container">
+                <div class="row justify-content-center button-container">
+                    
+                </div>
+            </div>
+        </div>
+    
+    
+
+
+
+
+      <!-- Features -->
+    <div class="row aln-center">
+      <section id="features">
+        <div class="container">
+          <header>
+            <h2>Aduanmu,  <strong>Penting bagi kami </strong>!</h2>
+          </header>
+          <div class="row aln-center">
+            <div class="col-4 col-6-medium col-12-small">
+
+              <!-- Feature -->
+                <section>
+                  <a href="#" class="image featured"><img src="{{ asset('adminlte/logo/jalan.png')}}" alt="" /></a>
+                  <header>
+                    <h3>Apa yang Kalian Tunggu?</h3>
+                  </header>
+                  <p><strong>Mari ! </strong>, bersama-sama menjaga keamanan dan kenyamanan perjalanan di lingkungan kita! 
+                  </p>
+                </section>
+
+            </div>
+            <div class="col-4 col-6-medium col-12-small">
+
+              <!-- Feature -->
+                <section>
+                  <a href="#" class="image featured"><img src="{{ asset('adminlte/logo/pencuri.png')}}" alt="" /></a>
+                  <header>
+                    <h3>Tindakan kalian kami butuhkan !</h3>
+                  </header>
+                  <p><strong>Ayo ! </strong>, laporkan setiap masalah yang Anda temui di sekitar dengan mengakses website kami.
+                    
+                  </p>
+                </section>
+
+            </div>
+            <div class="col-4 col-6-medium col-12-small">
+
+              <!-- Feature -->
+                <section>
+                  <a href="#" class="image featured"><img src="{{ asset('adminlte/logo/sampah.png')}}" alt="" /></a>
+                  <header>
+                    <h3>Sehingga jadi seperti ini?</h3>
+                  </header>
+                  <p> <strong>Ingat ! </strong>, laporan Anda sangat berarti untuk kemajuan sarana dan prasarana yang lebih baik. Terima kasih atas partisipasi Anda!</p>
+                </section>
+
+            </div>
+            <div class="col-12">
+              <ul class="actions">
+                <li><a href="/login" class="button icon solid fa-file">Laporkan</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        </section>
     </div>
-  </div>
+    
+
+  
 </body>
 </html>
+
 @endsection

@@ -16,7 +16,7 @@
         <div class="card card-outline card-primary">
           <div class="card-header text-center">
               <a href="">
-                  <img src="{{ asset('adminlte/logo/utama.png')}}" alt="Logo Peduli Lingkungan" class="h1" style="width: 300px; height: 100px;">
+                  <img src="{{ asset('adminlte/logo/landing.png')}}" alt="Logo Peduli Lingkungan" class="h1" style="width: 300px; height: 100px;">
                   
               </a>
               

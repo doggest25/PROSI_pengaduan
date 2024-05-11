@@ -12,7 +12,7 @@
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
 
-        <img src="{{ asset('adminlte/logo/utama.png')}}" alt="Logo Peduli Lingkungan" class="h1" style="width: 200px; height: auto;">
+        <img src="{{ asset('adminlte/logo/landing.png')}}" alt="Logo Peduli Lingkungan" class="h1" style="width: 200px; height: auto;">
         
   
     </div>
@@ -94,7 +94,7 @@
 
       
 
-      <a href="{{url('login')}}" class="text-center">I already have a membership</a>
+      <a href="{{url('login')}}" class="text-center">Sudah mempunyai akun</a>
     </div>
     <!-- /.form-box -->
   </div><!-- /.card -->

@@ -50,22 +50,23 @@
 
     <!-- Right navbar links -->
     <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
-      
-      
       @auth
-      <li class="nav-item">
+    <li class="nav-item">
         <span class="nav-link">
-            <i class="fas fa-user"> </i> {{ Auth::user()->nama }}
+            <i class="fas fa-user"></i> {{ Auth::user()->nama }}
         </span>
     </li>
-    
     <li class="nav-item">
-      <a href="{{ route('logout') }}" class="nav-link">
-          <i class="fas fa-sign-out-alt"></i> Logout
-      </a>
-  </li>
-  
-      @endauth
+        <a href="{{ route('logout') }}" class="nav-link">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+    </li>
+@else
+    <li class="nav-item">
+        <a href="/login" class="nav-link">Login</a>
+    </li>
+@endauth
+
     </ul>
   </div>
 </nav>
