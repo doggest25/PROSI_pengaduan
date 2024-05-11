@@ -1,7 +1,7 @@
 @extends('layout.template')
 
 @section('title')
-<h1 class="m-0"> Dashboard <small>page</small>  </h1>@endsection
+@endsection
 @section('content')
 @if(session('success'))
 <div class="alert alert-success">{{ session('success') }}</div>

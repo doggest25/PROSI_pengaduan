@@ -32,6 +32,7 @@ use Monolog\Level;
 
 //About us page
 Route::get('/about', [AboutController::class, 'index']);
+Route::get('/contact', [AboutController::class, 'contact']);
 
 //Mengelola data user -> Admin
 Route::group(['middleware' => ['auth', 'cek_login:2']], function () {
@@ -95,6 +96,17 @@ Route::group(['prefix' => 'warga'], function () {
     Route::delete('/{id}', [WargaController::class, 'destroy']); //menghapus data 
       
 });
+Route::group(['prefix' => 'warga'], function () {
+    Route::get('/pengaduan', [WargaController::class, 'create']);//melakukan pengaduan
+    Route::post('/save', [WargaController::class, 'store']);
+    Route::get('/detail', [WargaController::class, 'detail']);
+    Route::post('/list', [WargaController::class, 'list']);//history pengaduan individu
+    Route::get('/{id}', [WargaController::class, 'show']); //menampilkan detailRoute::get('/pengaduan', [WargaController::class, 'create']);
+    Route::get('/{id}/edit', [WargaController::class, 'edit']); //menampilkan halaman form edit 
+    Route::put('/{id}', [WargaController::class, 'update']); //menyimpan perubahan data 
+    Route::delete('/{id}', [WargaController::class, 'destroy']); //menghapus data 
+      
+});
 });
 
 //halaman awal website
@@ -130,6 +142,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 Route::get('/users', [LevelController::class, 'index']);
+
 
 
 

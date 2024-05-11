@@ -2,7 +2,7 @@
   <div class="container">
     <a h class="navbar-brand">
       <img src="{{ asset('adminlte/logo/page.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">Pengaduan Warga</span>
+      <span class="brand-text font-weight-light">Peduli Lingkungan</span>
     </a>
 
     <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,13 +17,18 @@
     
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a href="/warga" class="nav-link">Home</a>
+        @if (Auth::check())
+    <a href="/warga" class="nav-link">Home</a>
+      @else
+    <a href="/" class="nav-link">Home</a>
+    @endif
+
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">Contact</a>
+        <a href="/contact" class="nav-link">Contact</a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">About us</a>
+        <a href="/about" class="nav-link">About us</a>
       </li>
         
        

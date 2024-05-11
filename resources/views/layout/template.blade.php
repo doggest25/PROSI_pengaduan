@@ -47,24 +47,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
             @yield('title')
             
           </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="/warga">Home</a></li>
-              <li class="breadcrumb-item active">Top Navigation</li>
-            </ol>
-          </div><!-- /.col -->
+         <!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
 
     <!-- Main content -->
-    <div class="content">
-      <div class="container">
+    
+      
         @yield('content')
         
-      </div><!-- /.container-fluid -->
-    </div>
+      <!-- /.container-fluid -->
+   
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->

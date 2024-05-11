@@ -1,7 +1,5 @@
 @extends('layout.template')
-@section('title')
-<h1 class="m-0"> Pengaduan Warga <small>page</small>  </h1>
-@endsection
+
 @section('content')
 
 <h1>Form Pengaduan</h1>

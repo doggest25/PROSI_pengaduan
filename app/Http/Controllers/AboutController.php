@@ -10,4 +10,8 @@ class AboutController extends Controller
 
         return view('about.index');
     }
+    public function contact(){
+
+        return view('about.contact');
+    }
 }

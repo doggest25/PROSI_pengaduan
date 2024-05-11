@@ -1,7 +1,5 @@
 @extends('layout.template')
 
-@section('title')
-<h1 class="m-0"> History Pengaduan, <small>page</small>  </h1>@endsection
 @section('content')
 <div class="card card-outline card-primary">
     <div class="card-header">
@@ -108,7 +106,7 @@
                     statusText = 'Diproses';
                 }   else if (status === 'Selesai') {
                     statusClass = 'badge-success';
-                    statusText = 'Diproses';
+                    statusText = 'Selesai';
                 }
                 $(row).find('td:eq(2)').html('<span class="badge ' + statusClass + '">' + statusText + '</span>');
 
