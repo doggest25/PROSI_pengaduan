@@ -1,30 +1,116 @@
 @extends('layout.template')
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Tentang Kami</h3>
+<!-- Main -->
+<section id="main">
+    <div class="container">
+        <div class="row">
+
+            <!-- Content -->
+                <div id="content" class="col-8 col-12-medium">
+
+                    <!-- Post -->
+                        <article class="box post">
+                            <header>
+                                <h2><a href="#">Our Journey,<strong>Peduli Lingkungan</strong> ...<br/>
+                                Start from Here</a></h2>
+                            </header>
+                            <a href="#" class="image featured"><img src="{{ asset('adminlte/logo/about.png')}}" alt="" style="width: 734px; height: 400px;" /></a>
+
+                            <h3>I mean isn't it possible?</h3>
+                            <p>Phasellus laoreet massa id justo mattis pharetra. Fusce suscipit
+                            ligula vel quam viverra sit amet mollis tortor congue. Sed quis mauris
+                            sit amet magna accumsan tristique. Curabitur leo nibh, rutrum eu malesuada
+                            in, tristique at erat lorem ipsum dolor sit amet lorem ipsum sed consequat
+                            magna tempus veroeros lorem sed tempus aliquam lorem ipsum veroeros
+                            consequat magna tempus lorem ipsum consequat Phasellus laoreet massa id
+                            justo mattis pharetra. Fusce suscipit ligula vel quam viverra sit amet
+                            mollis tortor congue. Sed quis mauris sit amet magna accumsan tristique.
+                            Curabitur leo nibh, rutrum eu malesuada in tristique.</p>
+                            <ul class="actions">
+                                <li><a href="#" class="button icon solid fa-file">Continue Reading</a></li>
+                            </ul>
+                        </article>
+
+                    
+
                 </div>
-                <div class="card-body">
-                    <p>Selamat datang di [Nama Organisasi/Platform]! Kami adalah komunitas yang berdedikasi untuk melindungi dan meningkatkan kualitas lingkungan hidup kita. Dengan semangat yang kuat dan tekad yang teguh, kami berusaha untuk menciptakan perubahan positif dalam lingkungan tempat tinggal kita.</p>
-                    <h4>Visi Kami</h4>
-                    <p>Visi kami adalah menciptakan lingkungan yang bersih, sehat, dan berkelanjutan untuk generasi masa depan. Kami percaya bahwa setiap tindakan kecil memiliki dampak besar dalam menjaga bumi kita tetap lestari.</p>
-                    <h4>Misi Kami</h4>
-                    <ol>
-                        <li><strong>Mendorong Kesadaran Lingkungan:</strong> Kami berupaya untuk meningkatkan kesadaran masyarakat tentang pentingnya menjaga lingkungan hidup melalui edukasi dan kampanye-kampanye sosial.</li>
-                        <li><strong>Menggalang Dukungan:</strong> Kami mengajak semua pihak, baik individu maupun perusahaan, untuk bergabung dengan kami dalam memperjuangkan lingkungan yang lebih baik.</li>
-                        <li><strong>Mengedepankan Keadilan Lingkungan:</strong> Kami berkomitmen untuk memastikan bahwa setiap orang, tanpa memandang latar belakang, memiliki akses yang adil terhadap lingkungan yang sehat dan aman.</li>
-                        <li><strong>Menyediakan Platform Pengaduan:</strong> Kami menyediakan platform untuk masyarakat untuk melaporkan permasalahan lingkungan di sekitar mereka dan berpartisipasi dalam proses penyelesaian.</li>
-                    </ol>
-                    <h4>Tim Kami</h4>
-                    <p>Kami adalah tim yang terdiri dari individu yang peduli dan berkomitmen dalam melindungi lingkungan. Dengan beragam latar belakang dan keahlian, kami bersatu untuk menciptakan perubahan yang positif.</p>
-                    <h4>Bergabunglah dengan Kami!</h4>
-                    <p>Ayo bergabung dengan kami dalam memperjuangkan lingkungan yang lebih baik! Setiap langkah kecil yang kita ambil hari ini akan berkontribusi pada masa depan bumi kita. Hubungi kami untuk informasi lebih lanjut atau kunjungi [Website/Sosial Media kami] untuk bergabung.</p>
+
+            <!-- Sidebar -->
+                <div id="sidebar" class="col-4 col-12-medium">
+
+                    <!-- Excerpts -->
+                        <section>
+                            <ul class="divided">
+                                <li>
+
+                                    <!-- Excerpt -->
+                                        <article class="box excerpt">
+                                            <header>
+                                                <span class="date">July 30</span>
+                                                <h3><a href="#">Just another post</a></h3>
+                                            </header>
+                                            <p>Lorem ipsum dolor odio facilisis convallis. Etiam non nunc vel est
+                                            suscipit convallis non id orci lorem ipsum sed magna consequat feugiat lorem dolore.</p>
+                                        </article>
+
+                                </li>
+                                <li>
+
+                                    <!-- Excerpt -->
+                                        <article class="box excerpt">
+                                            <header>
+                                                <span class="date">July 28</span>
+                                                <h3><a href="#">And another post</a></h3>
+                                            </header>
+                                            <p>Lorem ipsum dolor odio facilisis convallis. Etiam non nunc vel est
+                                            suscipit convallis non id orci lorem ipsum sed magna consequat feugiat lorem dolore.</p>
+                                        </article>
+
+                                </li>
+                                <li>
+
+                                    <!-- Excerpt -->
+                                        <article class="box excerpt">
+                                            <header>
+                                                <span class="date">July 24</span>
+                                                <h3><a href="#">One more post</a></h3>
+                                            </header>
+                                            <p>Lorem ipsum dolor odio facilisis convallis. Etiam non nunc vel est
+                                            suscipit convallis non id orci lorem ipsum sed magna consequat feugiat lorem dolore.</p>
+                                        </article>
+
+                                </li>
+                            </ul>
+                        </section>
+
+                    <!-- Highlights -->
+                        <section>
+                            <ul class="divided">
+                                <li>
+
+                                    <!-- Highlight -->
+                                        <article class="box highlight">
+                                            <header>
+                                                <h3><a href="#">Something of note</a></h3>
+                                            </header>
+                                            <a href="#" class="image left"><img src="images/pic06.jpg" alt="" /></a>
+                                            <p>Phasellus sed laoreet massa id justo mattis pharetra. Fusce suscipit ligula vel quam
+                                            viverra sit amet mollis tortor congue magna lorem ipsum dolor et quisque ut odio facilisis
+                                            convallis. Etiam non nunc vel est suscipit convallis non id orci. Ut interdum tempus
+                                            facilisis convallis. Etiam non nunc vel est suscipit convallis non id orci.</p>
+                                            <ul class="actions">
+                                                <li><a href="#" class="button icon solid fa-file">Learn More</a></li>
+                                            </ul>
+                                        </article>
+
+                                </li>
+                            
+                            </ul>
+                        </section>
+
                 </div>
-            </div>
+
         </div>
     </div>
-</div>
+</section>
 @endsection

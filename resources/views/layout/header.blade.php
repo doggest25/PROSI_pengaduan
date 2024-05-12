@@ -1,3 +1,6 @@
+<head>
+  <link rel="stylesheet" href="{{asset('temp/assets/css/main.css')}}" />
+</head>
 <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
   <div class="container">
     <a h class="navbar-brand">
@@ -25,7 +28,7 @@
 
       </li>
       <li class="nav-item">
-        <a href="/contact" class="nav-link">Contact</a>
+        <a href="#footer" class="nav-link">Contact</a>
       </li>
       <li class="nav-item">
         <a href="/about" class="nav-link">About us</a>

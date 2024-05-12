@@ -1,5 +1,5 @@
-@extends('layout.template')
 
+@extends('layout.template')
 @section('content')
 
 <h1>Form Pengaduan</h1>
@@ -61,3 +61,4 @@
 </div>
 
 @endsection
+
