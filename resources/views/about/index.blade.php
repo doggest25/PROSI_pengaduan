@@ -14,20 +14,18 @@
                                 <h2><a href="#">Our Journey,<strong>Peduli Lingkungan</strong> ...<br/>
                                 Start from Here</a></h2>
                             </header>
-                            <a href="#" class="image featured"><img src="{{ asset('adminlte/logo/about.png')}}" alt="" style="width: 734px; height: 400px;" /></a>
+                            <a href="#" class="image featured"><img src="{{ asset('adminlte/logo/about.png')}}" alt="" style="width: 900px; height: 500px;" /></a>
 
-                            <h3>I mean isn't it possible?</h3>
-                            <p>Phasellus laoreet massa id justo mattis pharetra. Fusce suscipit
-                            ligula vel quam viverra sit amet mollis tortor congue. Sed quis mauris
-                            sit amet magna accumsan tristique. Curabitur leo nibh, rutrum eu malesuada
-                            in, tristique at erat lorem ipsum dolor sit amet lorem ipsum sed consequat
-                            magna tempus veroeros lorem sed tempus aliquam lorem ipsum veroeros
-                            consequat magna tempus lorem ipsum consequat Phasellus laoreet massa id
-                            justo mattis pharetra. Fusce suscipit ligula vel quam viverra sit amet
-                            mollis tortor congue. Sed quis mauris sit amet magna accumsan tristique.
-                            Curabitur leo nibh, rutrum eu malesuada in tristique.</p>
+                            <h3>PeduLingkungan</h3>
+                            <p>PeduLingkungan adalah platform yang berdedikasi untuk menggalang kesadaran dan tindakan positif dalam menjaga lingkungan. 
+                                Kami percaya bahwa melalui edukasi, kolaborasi, dan aksi nyata, kita dapat menciptakan perubahan yang berkelanjutan bagi planet kita. 
+                                Di PeduLingkungan, kami menyediakan informasi terkini tentang isu-isu lingkungan, solusi-solusi inovatif, serta memfasilitasi komunitas 
+                                untuk berbagi pengetahuan dan pengalaman. Dengan semangat kolaboratif, kami mengundang semua individu dan organisasi untuk bergabung 
+                                bersama kami dalam membangun masa depan yang lebih hijau dan berkelanjutan untuk generasi mendatang. 
+                                Mari bersama-sama menjaga kelestarian alam kita untuk hari esok yang lebih baik..</p>
                             <ul class="actions">
                                 <li><a href="#" class="button icon solid fa-file">Continue Reading</a></li>
+                                
                             </ul>
                         </article>
 
@@ -47,10 +45,16 @@
                                         <article class="box excerpt">
                                             <header>
                                                 <span class="date">July 30</span>
-                                                <h3><a href="#">Just another post</a></h3>
+                                                <h3><a href="#">Laporan Terbaru</a></h3>
                                             </header>
-                                            <p>Lorem ipsum dolor odio facilisis convallis. Etiam non nunc vel est
-                                            suscipit convallis non id orci lorem ipsum sed magna consequat feugiat lorem dolore.</p>
+                                            <p> PeduLingkungan baru saja menghadapi 
+                                                tantangan baru dalam menjalankan misi
+                                                kami untuk melindungi lingkungan. 
+                                                Meskipun demikian, kami tetap optimis 
+                                                bahwa dengan kolaborasi dan komitmen, 
+                                                kita dapat mengatasi hambatan ini 
+                                                dan mencapai perubahan positif yang 
+                                                kita harapkan.</p>
                                         </article>
 
                                 </li>
