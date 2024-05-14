@@ -51,14 +51,40 @@
                 <section>
                     <ul class="divided">
                         <li>
+
                             <!-- Highlight -->
-                            <article class="box highlight">
-                                <header>
-                                    <h3><a href="#">Catatan</a></h3>
-                                </header>
-                                <p>PeduLingkungan adalah sebuah platform yang mengemban misi mulia dalam menggalang kesadaran serta tindakan positif untuk menjaga kelestarian lingkungan. Kami teguh dalam keyakinan bahwa dengan pendekatan yang holistik, meliputi edukasi, kolaborasi lintas sektor, dan pelaksanaan tindakan nyata, kita mampu menciptakan perubahan yang berkelanjutan bagi bumi kita. Di PeduLingkungan, kami tidak hanya menyediakan informasi terkini seputar isu-isu lingkungan yang sedang berkembang, tetapi juga menghadirkan solusi-solusi inovatif yang dapat menjadi landasan untuk perubahan positif. Selain itu, kami aktif memfasilitasi komunitas untuk berpartisipasi, berdiskusi, dan berbagi pengalaman guna mendorong kolaborasi yang lebih luas dalam menjaga kelestarian alam..
-                                </p>
-                            </article>
+                                <article class="box highlight">
+                                    <header>
+                                        <h3><a href="#">Something of note</a></h3>
+                                    </header>
+                                    <a href="#" class="image left"><img src="{{asset('temp/images/pic06.jpg')}}" alt="" /></a>
+                                    <p>Phasellus sed laoreet massa id justo mattis pharetra. Fusce suscipit ligula vel quam
+                                    viverra sit amet mollis tortor congue magna lorem ipsum dolor et quisque ut odio facilisis
+                                    convallis. Etiam non nunc vel est suscipit convallis non id orci. Ut interdum tempus
+                                    facilisis convallis. Etiam non nunc vel est suscipit convallis non id orci.</p>
+                                    <ul class="actions">
+                                        <li><a href="#" class="button icon solid fa-file">Learn More</a></li>
+                                    </ul>
+                                </article>
+
+                        </li>
+                        <li>
+
+                            <!-- Highlight -->
+                                <article class="box highlight">
+                                    <header>
+                                        <h3><a href="#">Something of less note</a></h3>
+                                    </header>
+                                    <a href="#" class="image left"><img src="images/pic07.jpg" alt="" /></a>
+                                    <p>Phasellus sed laoreet massa id justo mattis pharetra. Fusce suscipit ligula vel quam
+                                    viverra sit amet mollis tortor congue magna lorem ipsum dolor et quisque ut odio facilisis
+                                    convallis. Etiam non nunc vel est suscipit convallis non id orci. Ut interdum tempus
+                                    facilisis convallis. Etiam non nunc vel est suscipit convallis non id orci.</p>
+                                    <ul class="actions">
+                                        <li><a href="#" class="button icon solid fa-file">Learn More</a></li>
+                                    </ul>
+                                </article>
+
                         </li>
                     </ul>
                 </section>

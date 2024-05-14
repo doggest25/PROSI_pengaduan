@@ -30,7 +30,7 @@
       </div>
       <div class="col-6 col-12-medium">
         <section>
-          <p>Website Peduli Lingkungan adalah website yang sedang berkembang untuk memudahkan warga dalam hal pengaduan. Pengaduan dari berbagai macam hal untuk disampaikan pada ketua RW</p>
+          <p>Website Peduli Lingkungan adalah website yang sedang berkembang untuk memudahkan warga dalam hal pengaduan. Pengaduan dari berbagai macam haaaaaaaaaaaaaaaaaal untuk disampaikan pada ketua RW</p>
           <div class="row">
             <div class="col-6 col-12-small">
               <ul class="icons">
