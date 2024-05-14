@@ -1,10 +1,9 @@
-@extends('layout.template')
 
+@extends('layout.template')
 
 @section('content')
 <!-- Banner -->
 <section id="banner">
-
     <!--
         ".inner" is set up as an inline-block so it automatically expands
         in both directions to fit whatever's inside it. This means it won't
@@ -12,51 +11,67 @@
         appropriate (<br />).
     -->
     <div class="inner">
-
         <header>
             <h2>Aduanmu Penting Bagi Kami</h2>
         </header>
         <p>selamat datang di <strong><a href="{{url('/about')}}">Peduli Lingkungan</a></strong> Website
-       <br   >
-       <br>
+            <br>
+            <br>
         </p>
         <footer>
             <ul class="buttons stacked">
                 <li><a href="{{url('warga/pengaduan')}}" class="button fit scrolly">Adukan</a></li>
             </ul>
         </footer>
-
     </div>
-
 </section>
 
-    
-        <div class="row">
-                    <div id="sidebar" class="col-4 col-12-medium">
-                        <section>
-                            <ul class="divided">
-                                <li>
-
-                                    <!-- Highlight -->
-                                        <article class="box highlight">
-                                            <header>
-                                                <h3>History Pengaduan</h3>
-                                            </header>
-                                            <a href="#" class="image left"><img src="{{asset('temp/images/pic06.jpg')}}" alt="" /></a>
-                                            <p>Phasellus sed laoreet massa id justo mattis pharetra. Fusce suscipit ligula vel quam
-                                            viverra sit amet mollis tortor congue magna lorem ipsum dolor et quisque ut odio facilisis
-                                            convallis. Etiam non nunc vel est suscipit convallis non id orci. Ut interdum tempus
-                                            facilisis convallis. Etiam non nunc vel est suscipit convallis non id orci.</p>
-                                            <ul class="actions">
-                                                <li><a href="{{url('warga/detail')}}" class="button icon solid fa-file">History Pengaduan</a></li>
-                                            </ul>
-                                        </article>
-
-                                </li>
-                            </ul>
-                        </section>
-                    </div>
+<!-- Features -->
+<section id="features">
+    <div class="container">
+        <header>
+            <h2><strong>Riwayat Pengaduan</strong></h2>
+        </header>
+        <div class="row aln-center">
+            <div class="col-4 col-6-medium col-12-small">
+                <!-- Feature -->
+                <section>
+                    <a href="#" class="image featured"><img src="{{ asset('images/pic01.jpg')}}" alt="" /></a>
+                    <header>
+                        <h3>Tanggal 5 Mei 2024</h3>
+                    </header>
+                    <p>Jenis Aduan: Sampah menumpuk di taman</p>
+                    <p>Penyelesaian: Petugas kebersihan telah membersihkan taman dan mengambil tindakan pencegahan.</p>
+                </section>
+            </div>
+            <div class="col-4 col-6-medium col-12-small">
+                <!-- Feature -->
+                <section>
+                    <a href="#" class="image featured"><img src="{{ asset('images/pic02.jpg')}}" alt="" /></a>
+                    <header>
+                        <h3>Tanggal 12 Mei 2024</h3>
+                    </header>
+                    <p>Jenis Aduan: Pohon tumbang di jalan</p>
+                    <p>Penyelesaian: Tim pemadam kebakaran telah membersihkan pohon dan memperbaiki kerusakan yang disebabkan.</p>    
+                </section>
+            </div>
+            <div class="col-4 col-6-medium col-12-small">
+                <!-- Feature -->
+                <section>
+                    <a href="#" class="image featured"><img src="{{ asset('images/pic03.jpg')}}" alt="" /></a>
+                    <header>
+                        <h3>Tanggal 19 Mei 2024</h3>
+                    </header>
+                    <p>Jenis Aduan: Kebocoran air di jalan</p>
+                    <p>Penyelesaian: Tim teknisi telah memperbaiki pipa dan menangani kebocoran dengan cepat.</p>
+                </section>
+            </div>
+            <div class="col-12">
+                <ul class="actions">
+                    <li><a href="#" class="button icon solid fa-file">Lihat Detail</a></li>
+                </ul>
+            </div>
         </div>
-                  
-
+    </div>
+</section>
 @endsection
