@@ -9,6 +9,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<link rel="stylesheet" href="{{asset('temp/assets/css/main.css')}}" />
+  
   <title>Peduli Lingkungan</title>
   <link rel="icon" href="{{ asset('adminlte/logo/page.png')}}" type="image/png">
 
