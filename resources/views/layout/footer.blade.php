@@ -5,7 +5,7 @@
 <section id="footer">
   <div class="container">
     <header>
-      <h2>Questions or comments? <strong>Get in touch:</strong></h2>
+      <h2>Kritik dan Saran?</h2>
     </header>
     <div class="row">
       <div class="col-6 col-12-medium">
@@ -30,38 +30,38 @@
       </div>
       <div class="col-6 col-12-medium">
         <section>
-          <p>Erat lorem ipsum veroeros consequat magna tempus lorem ipsum consequat Phaselamet
-          mollis tortor congue. Sed quis mauris sit amet magna accumsan tristique. Curabitur
-          leo nibh, rutrum eu malesuada.</p>
+          <p>Website Peduli Lingkungan adalah website yang sedang berkembang untuk memudahkan warga dalam hal pengaduan. Pengaduan dari berbagai macam hal untuk disampaikan pada ketua RW</p>
           <div class="row">
             <div class="col-6 col-12-small">
               <ul class="icons">
-                <li class="icon solid fa-home">
-                  1234 Somewhere Road<br />
-                  Nashville, TN 00000<br />
-                  USA
+              
+              <li class="icon solid fa-home">
+                  <a href="https://maps.app.goo.gl/9eUVC9CLNrXyW2HK8">
+                    RW 03<br />Jl. Semanggi 2-15, Jatimulyo, Kec. Lowokwaru, Kota Malang, Jawa Timur 65141<br /></a>
+                  <!-- POLITEKNIK NEGERI MALANG<br />
+                  Jl. Soekarno Hatta No.9, Jatimulyo, Kec. Lowokwaru, Kota Malang, Jawa Timur 65141<br /> -->
                 </li>
                 <li class="icon solid fa-phone">
-                  (000) 000-0000
+                  0857-4937-9804
                 </li>
                 <li class="icon solid fa-envelope">
-                  <a href="#">info@untitled.tld</a>
+                  <a href="#">pedulingkungan@gmail.com</a>
                 </li>
               </ul>
             </div>
             <div class="col-6 col-12-small">
               <ul class="icons">
                 <li class="icon brands fa-twitter">
-                  <a href="#">@untitled</a>
+                  <a href="#">pedulingkungan@gmail.com</a>
                 </li>
                 <li class="icon brands fa-instagram">
-                  <a href="#">instagram.com/untitled</a>
+                  <a href="#">pedulingkungan</a>
                 </li>
-                <li class="icon brands fa-dribbble">
+                <!-- <li class="icon brands fa-dribbble">
                   <a href="#">dribbble.com/untitled</a>
-                </li>
+                </li> -->
                 <li class="icon brands fa-facebook-f">
-                  <a href="#">facebook.com/untitled</a>
+                  <a href="#">pedulingkungan</a>
                 </li>
               </ul>
             </div>
