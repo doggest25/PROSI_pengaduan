@@ -51,43 +51,55 @@
                 <section>
                     <ul class="divided">
                         <li>
-
                             <!-- Highlight -->
-                                <article class="box highlight">
-                                    <header>
-                                        <h3><a href="#">Something of note</a></h3>
-                                    </header>
-                                    <a href="#" class="image left"><img src="{{asset('temp/images/pic06.jpg')}}" alt="" /></a>
-                                    <p>Phasellus sed laoreet massa id justo mattis pharetra. Fusce suscipit ligula vel quam
-                                    viverra sit amet mollis tortor congue magna lorem ipsum dolor et quisque ut odio facilisis
-                                    convallis. Etiam non nunc vel est suscipit convallis non id orci. Ut interdum tempus
-                                    facilisis convallis. Etiam non nunc vel est suscipit convallis non id orci.</p>
-                                    <ul class="actions">
-                                        <li><a href="#" class="button icon solid fa-file">Learn More</a></li>
-                                    </ul>
-                                </article>
-
+                            <article class="box highlight">
+                                <header>
+                                    <h3><a href="#">Events</a></h3>
+                                </header>
+                                <ul>
+                                    <li>
+                                        <span class="date">5 Mei 2024 </span>
+                                        <h4><a href="#">Membersihkan Selokan</a></h4>
+                                        <p>Gotong royong membersihkan selokan dilakukan pada hari Minggu di seluruh RT 03 .</p>
+                                    </li>
+                                    <li>
+                                        <span class="date">12 Mei 2024</span>
+                                        <h4><a href="#">Menebang Pohon</a></h4>
+                                        <p>Gotong royong menebang pohon di pinggir jalan yang sudah tua pada hari Minggu di seluruh lingkungan RW.</p>
+                                    </li>
+                                    <li>
+                                        <span class="date">26 Mei 2024</span>
+                                        <h4><a href="#">Kebersihan Lingkungan</a></h4>
+                                        <p>Gotong royong memotong rumput dilakukan pada hari Minggu di seluruh jalan pada lingkungan RW.</p>
+                                    </li>
+                                    <li>
+                                        <span class="date">9 Juni 2024</span>
+                                        <h4><a href="#">Perbaikan Infrastruktur</a></h4>
+                                        <p>Gotong royong dalam merawat taman yang berada pada RT 05 dilakukan pada hari Minggu.</p>
+                                    </li>
+                                    <li>
+                                        <span class="date">30 Juni 2024</span>
+                                        <h4><a href="#">Rapat RT</a></h4>
+                                        <p>Rapat untuk seluruh ketua RT dilaksanakan pada hari Minggu malam hari .</p>
+                                    </li>
+                                </ul>
+                            </article>
                         </li>
                         <li>
-
                             <!-- Highlight -->
-                                <article class="box highlight">
-                                    <header>
-                                        <h3><a href="#">Something of less note</a></h3>
-                                    </header>
-                                    <a href="#" class="image left"><img src="images/pic07.jpg" alt="" /></a>
-                                    <p>Phasellus sed laoreet massa id justo mattis pharetra. Fusce suscipit ligula vel quam
-                                    viverra sit amet mollis tortor congue magna lorem ipsum dolor et quisque ut odio facilisis
-                                    convallis. Etiam non nunc vel est suscipit convallis non id orci. Ut interdum tempus
-                                    facilisis convallis. Etiam non nunc vel est suscipit convallis non id orci.</p>
-                                    <ul class="actions">
-                                        <li><a href="#" class="button icon solid fa-file">Learn More</a></li>
-                                    </ul>
-                                </article>
-
+                            <article class="box highlight">
+                                <header>
+                                    <h3><a href="#">Catatan</a></h3>
+                                </header>
+                                <p>Catatan Anda di sini.</p>
+                                <ul class="actions">
+                                    <li><a href="#" class="button icon solid fa-file">Learn More</a></li>
+                                </ul>
+                            </article>
                         </li>
                     </ul>
                 </section>
+
             </div>
         </div>
     </div>
