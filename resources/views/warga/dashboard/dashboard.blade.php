@@ -2,6 +2,12 @@
 @extends('layout.template')
 
 @section('content')
+@if(session('success'))
+        <div class="alert alert-success"> {{ session('success') }} </div>
+        @endif
+        @if(session('error'))
+        <div class="alert alert-danger"> {{ session('error') }} </div>
+        @endif
 <!-- Banner -->
 <section id="banner">
     <!--
@@ -68,7 +74,7 @@
             </div>
             <div class="col-12">
                 <ul class="actions">
-                    <li><a href="#" class="button icon solid fa-file">Lihat Detail</a></li>
+                    <li><a href="{{url('warga/detail')}}" class="button icon solid fa-file">Lihat Detail</a></li>
                 </ul>
             </div>
         </div>
