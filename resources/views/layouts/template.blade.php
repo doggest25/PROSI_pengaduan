@@ -31,6 +31,14 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 
+
+<script>
+  function confirmLogout() {
+      if (confirm("Apakah Anda yakin akan logout?")) {
+          window.location.href = "{{ route('logout') }}";
+      }
+  }
+</script>
   @stack('css') <!-- Digunakan untuk memanggil custom css dari perintah push('css') pada masing-masing view -->
   
 

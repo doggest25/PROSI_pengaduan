@@ -13,6 +13,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WargaController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Auth\Events\Login;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Monolog\Level;
 
@@ -126,7 +127,13 @@ Route::group(['prefix' => 'login'], function () {
 Route::get('login',[LoginController::class, 'index'])->name('login');
 Route::get('register',[LoginController::class, 'register'])->name('register');
 Route::post('proses_login',[LoginController::class, 'proses_login'])->name('proses_login');
-Route::get('logout',[LoginController::class, 'logout'])->name('logout');
+Route::get('/logout', function () {
+    Auth::logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return redirect('/login');
+})->name('logout');
+
 Route::post('proses_register',[LoginController::class, 'proses_register'])->name('proses_register');
 
 

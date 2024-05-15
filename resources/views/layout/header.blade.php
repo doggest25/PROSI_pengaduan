@@ -60,10 +60,17 @@
         </span>
     </li>
     <li class="nav-item">
-        <a href="{{ route('logout') }}" class="nav-link">
+        <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault(); confirmLogout();">
             <i class="fas fa-sign-out-alt"></i> Logout
         </a>
     </li>
+    <script>
+      function confirmLogout() {
+          if (confirm("Apakah Anda yakin akan logout?")) {
+              window.location.href = "{{ route('logout') }}";
+          }
+      }
+    </script>
 @else
     <li class="nav-item">
         <a href="/login" class="nav-link">Login</a>
