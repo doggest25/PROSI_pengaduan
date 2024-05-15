@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AhpController;
 use App\Http\Controllers\DetailPengaduanController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JPengaduanController;
@@ -140,7 +141,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
 });
 
-
+Route::get('/calculate', [AhpController::class, 'calculate']);
 Route::get('/users', [LevelController::class, 'index']);
 
 
