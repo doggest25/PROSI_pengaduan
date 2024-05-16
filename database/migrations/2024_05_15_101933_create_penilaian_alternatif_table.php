@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('penilaian_alternatif', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_jenis_pengaduan');
+            $table->unsignedBigInteger('kriteria_id');
+            $table->decimal('nilai', 8, 4); // Nilai untuk kriteria pada alternatif tertentu
+
+            $table->foreign('id_jenis_pengaduan')->references('id_jenis_pengaduan')->on('jenis_pengaduan')->onDelete('cascade');
+            $table->foreign('kriteria_id')->references('id')->on('kriteria')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
