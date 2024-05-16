@@ -8,7 +8,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JPengaduanController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MABACController;
 use App\Http\Controllers\PengaduanController;
+use App\Http\Controllers\PrioritasController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WargaController;
 use App\Http\Controllers\WelcomeController;
@@ -149,6 +151,9 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 Route::get('/calculate', [AhpController::class, 'calculate']);
+Route::get('/mabac', [MABACController::class, 'hitungMABAC']);
+Route::get('/prioritas', [PrioritasController::class, 'calculate']);
+
 Route::get('/users', [LevelController::class, 'index']);
 
 
