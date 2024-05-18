@@ -150,9 +150,21 @@ Route::group(['middleware' => ['auth']], function () {
     });
 });
 
+
+
 Route::get('/calculate', [AhpController::class, 'calculate']);
-Route::get('/mabac', [MABACController::class, 'hitungMABAC']);
-Route::get('/prioritas', [PrioritasController::class, 'calculate']);
+
+//prioritas pengaduan
+Route::group(['middleware' => ['auth', 'cek_login:2']], function () {
+Route::group(['prefix' => 'prioritas'], function () {
+Route::get('/kriteria', [PrioritasController::class, 'tampilKriteria']);
+Route::post('/list', [PrioritasController::class, 'listKriteria']);
+Route::get('/hasil', [PrioritasController::class, 'calculate']);
+    });
+});
+
+
+
 
 Route::get('/users', [LevelController::class, 'index']);
 

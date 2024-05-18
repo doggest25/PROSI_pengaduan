@@ -7,11 +7,23 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Kriteria;
 use App\Models\PerbandinganKriteria;
 use App\Models\PenilaianAlternatif;
+use Yajra\DataTables\Facades\DataTables;
 
 class PrioritasController extends Controller
 {
     public function calculate()
     {
+        $breadcrumb = (object) [
+            'title' => '',
+            'list' => ['Home', 'prioritas']
+        ];
+    
+        $page = (object) [
+            'title' => 'Dashboard admin'
+        ];
+        $activeMenu = 'prioritas';
+
+        
         // AHP Calculation
 
         //Mendapatkan Nilai Perbandingan
@@ -149,6 +161,38 @@ foreach ($penilaianAlternatif as $penilaian) {
             'ci' => $ci,
             'cr' => $cr,
             'finalScores' => $finalScores,
+            'breadcrumb' => $breadcrumb, 
+            'page' => $page, 
+            'activeMenu' => $activeMenu
         ]);
     }
+
+    public function tampilKriteria() 
+    {
+        // Menampilkan halaman awal 
+        $breadcrumb = (object) [
+            'title' => 'Daftar Kriteria',
+            'list' => ['Home', 'Kriteria ']
+        ];
+
+        $page = (object) [
+            'title' => 'Daftar kriteria yang terdaftar dalam sistem'
+        ];
+
+        $activeMenu = 'kriteria'; //set menu yang aktif
+
+        return view('admin.prioritas.kriteria', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
+    }
+    public function listKriteria(Request $request)
+    {
+        $kriteria = Kriteria::select('id','nama','jenis');
+
+        return DataTables::of($kriteria)
+            ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
+            
+            ->rawColumns(['aksi'])
+            ->make(true);
+    }
+
+
 }

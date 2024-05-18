@@ -31,7 +31,7 @@ class AdminController extends Controller
 
     
         $activeMenu = 'dashboard';
-        return view('admin.dashboard.welcome', ['chart' => $chart->build(),'lastComplaint' => $lastComplaint,'lastRegister' => $lastRegister,'total' => $total,'total2'=> $total2,'diproses' => $diproses,'diterima' => $diterima,'ditolak' => $ditolak,'selesai' => $selesai, 'breadcrumb' => $breadcrumb, 'page' => $chart, 'activeMenu' => $activeMenu]);
+        return view('admin.dashboard.welcome', ['chart' => $chart->build(),'lastComplaint' => $lastComplaint,'lastRegister' => $lastRegister,'total' => $total,'total2'=> $total2,'diproses' => $diproses,'diterima' => $diterima,'ditolak' => $ditolak,'selesai' => $selesai, 'breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
     }
     
     

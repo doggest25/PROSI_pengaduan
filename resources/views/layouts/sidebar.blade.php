@@ -42,13 +42,13 @@
             </li>
             <li class="nav-header">Penentu Prioritas Pengaduan</li>
             <li class="nav-item">
-                <a href="{{ url('/prioritas') }}" class="nav-link {{ ($activeMenu == 'prioritas') ? 'active' : '' }}">
+                <a href="{{ url('/prioritas/kriteria') }}" class="nav-link {{ ($activeMenu == 'kriteria') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-clipboard-list"></i>
-                    <p>Nilai Kriteria</p>
+                    <p>Jenis Kriteria</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('/barang') }}" class="nav-link {{ ($activeMenu == '') ? 'active' : '' }}">
+                <a href="{{ url('/prioritas/hasil') }}" class="nav-link {{ ($activeMenu == '') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-calculator"></i>
                     <p>Hasil Perangkingan</p>
                 </a>

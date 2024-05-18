@@ -1,11 +1,15 @@
-<div class="container">
+
+    
+    @extends('layouts.template')
+
+    @section('content')
+    <div class="container">
     <h2>Perhitungan Prioritas</h2>
     <h3>Hasil AHP</h3>
     <p>Eigen Vector: {{ is_array($eigenVector) ? json_encode($eigenVector) : htmlspecialchars($eigenVector) }}</p>
     <p>Lambda Max: {{ is_array($lambdaMax) ? json_encode($lambdaMax) : htmlspecialchars($lambdaMax) }}</p>
     <p>CI: {{ is_array($ci) ? json_encode($ci) : htmlspecialchars($ci) }}</p>
     <p>CR: {{ is_array($cr) ? json_encode($cr) : htmlspecialchars($cr) }}</p>
-
     <h3>Hasil MABAC</h3>
     <table class="table">
         <thead>
@@ -24,3 +28,4 @@
         </tbody>
     </table>
 </div>
+@endsection
