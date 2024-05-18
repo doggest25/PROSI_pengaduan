@@ -12,160 +12,169 @@ use Yajra\DataTables\Facades\DataTables;
 class PrioritasController extends Controller
 {
     public function calculate()
-    {
-        $breadcrumb = (object) [
-            'title' => '',
-            'list' => ['Home', 'prioritas']
-        ];
-    
-        $page = (object) [
-            'title' => 'Dashboard admin'
-        ];
-        $activeMenu = 'prioritas';
+{
+    $breadcrumb = (object) [
+        'title' => '',
+        'list' => ['Home', 'prioritas']
+    ];
 
-        
-        // AHP Calculation
+    $page = (object) [
+        'title' => 'Dashboard admin'
+    ];
+    $activeMenu = 'prioritas';
 
-        //Mendapatkan Nilai Perbandingan
-        $kriteria = Kriteria::all();
-        $perbandinganKriteria = PerbandinganKriteria::all();
-        
-        //Membuat Matriks Perbandingan Berpasangan
-        $n = count($kriteria);
-        $pairwiseMatrix = array_fill(0, $n, array_fill(0, $n, 1.0));
-        
-        foreach ($perbandinganKriteria as $perbandingan) {
-            $i = $perbandingan->kriteria_1_id - 1;
-            $j = $perbandingan->kriteria_2_id - 1;
-            $nilai = $perbandingan->nilai_perbandingan;
-            $pairwiseMatrix[$i][$j] = $nilai;
-            $pairwiseMatrix[$j][$i] = 1 / $nilai;
+    // AHP Calculation
+
+    // Mendapatkan Nilai Perbandingan
+    $kriteria = Kriteria::all();
+    $perbandinganKriteria = PerbandinganKriteria::all();
+
+    // Membuat Matriks Perbandingan Berpasangan
+    $n = count($kriteria);
+    $pairwiseMatrix = array_fill(0, $n, array_fill(0, $n, 1.0));
+
+    foreach ($perbandinganKriteria as $perbandingan) {
+        $i = $perbandingan->kriteria_1_id - 1;
+        $j = $perbandingan->kriteria_2_id - 1;
+        $nilai = $perbandingan->nilai_perbandingan;
+        $pairwiseMatrix[$i][$j] = $nilai;
+        $pairwiseMatrix[$j][$i] = 1 / $nilai;
+    }
+
+    // Menghitung Jumlah Kolom
+    $columnSums = array_fill(0, $n, 0.0);
+    for ($j = 0; $j < $n; $j++) {
+        for ($i = 0; $i < $n; $i++) {
+            $columnSums[$j] += $pairwiseMatrix[$i][$j];
         }
+    }
 
-        //Menghitung Jumlah Kolom
-        $columnSums = array_fill(0, $n, 0.0);
+    // Normalisasi Matriks
+    $normalizedMatrix = array_fill(0, $n, array_fill(0, $n, 0.0));
+    for ($i = 0; $i < $n; $i++) {
         for ($j = 0; $j < $n; $j++) {
-            for ($i = 0; $i < $n; $i++) {
-                $columnSums[$j] += $pairwiseMatrix[$i][$j];
+            $normalizedMatrix[$i][$j] = $pairwiseMatrix[$i][$j] / $columnSums[$j];
+        }
+    }
+
+    // Menghitung Rata-rata Baris (Eigenvector)
+    $eigenVector = array_fill(0, $n, 0.0);
+    for ($i = 0; $i < $n; $i++) {
+        $sum = 0.0;
+        for ($j = 0; $j < $n; $j++) {
+            $sum += $normalizedMatrix[$i][$j];
+        }
+        $eigenVector[$i] = $sum / $n;
+    }
+
+    // Menghitung λ_max
+    $lambdaMax = 0.0;
+    for ($i = 0; $i < $n; $i++) {
+        $sum = 0.0;
+        for ($j = 0; $j < $n; $j++) {
+            $sum += $pairwiseMatrix[$i][$j] * $eigenVector[$j];
+        }
+        $lambdaMax += $sum / $eigenVector[$i];
+    }
+    $lambdaMax /= $n;
+
+    // Menghitung CI
+    $ci = ($lambdaMax - $n) / ($n - 1);
+
+    // Menghitung CR
+    $ri = [0.0, 0.0, 0.58, 0.90, 1.12, 1.24, 1.32, 1.41, 1.45];
+    $cr = $ci / $ri[$n - 1];
+
+    // MABAC Calculation
+
+    $alternatif = DB::table('jenis_pengaduan')->get();
+    $penilaianAlternatif = PenilaianAlternatif::all();
+
+    $m = count($alternatif);
+    $k = count($kriteria);
+
+    // Membentuk matriks keputusan awal
+    $decisionMatrix = [];
+    foreach ($penilaianAlternatif as $penilaian) {
+        $decisionMatrix[$penilaian->id_jenis_pengaduan][$penilaian->kriteria_id] = $penilaian->nilai;
+    }
+
+    // Normalisasi elemen matriks
+    $normalizedMatrix = [];
+    foreach ($decisionMatrix as $id_jenis_pengaduan => $row) {
+        $normalizedRow = [];
+        foreach ($row as $key => $value) {
+            if ($kriteria->find($key)->tipe == 'benefit') {
+                $normalizedRow[$key] = $value / max(array_column($decisionMatrix, $key));
+            } else {
+                $normalizedRow[$key] = min(array_column($decisionMatrix, $key)) / $value;
             }
         }
+        $normalizedMatrix[$id_jenis_pengaduan] = $normalizedRow;
+    }
 
-        //Normalisasi Matriks
-        $normalizedMatrix = array_fill(0, $n, array_fill(0, $n, 0.0));
-        for ($i = 0; $i < $n; $i++) {
-            for ($j = 0; $j < $n; $j++) {
-                $normalizedMatrix[$i][$j] = $pairwiseMatrix[$i][$j] / $columnSums[$j];
-            }
-        }   
-
-        //Menghitung Rata-rata Baris (Eigenvector)
-        $eigenVector = array_fill(0, $n, 0.0);
-        for ($i = 0; $i < $n; $i++) {
-            $sum = 0.0;
-            for ($j = 0; $j < $n; $j++) {
-                $sum += $normalizedMatrix[$i][$j];
-            }
-            $eigenVector[$i] = $sum / $n;
+    // Matriks tertimbang
+    $weightedMatrix = [];
+    foreach ($normalizedMatrix as $id_jenis_pengaduan => $row) {
+        $weightedRow = [];
+        foreach ($row as $key => $value) {
+            $weightedRow[$key] = $value * $eigenVector[$key - 1];
         }
+        $weightedMatrix[$id_jenis_pengaduan] = $weightedRow;
+    }
 
-        //Menghitung λ_max
-        $lambdaMax = 0.0;
-        for ($i = 0; $i < $n; $i++) {
-            $sum = 0.0;
-            for ($j = 0; $j < $n; $j++) {
-                $sum += $pairwiseMatrix[$i][$j] * $eigenVector[$j];
-            }
-            $lambdaMax += $sum / $eigenVector[$i];
+    // Matriks area perkiraan perbatasan
+    $gMatrix = array_fill(0, $k, 0);
+    foreach ($weightedMatrix as $row) {
+        foreach ($row as $key => $value) {
+            $gMatrix[$key - 1] += $value;
         }
-        $lambdaMax /= $n;
+    }
+    $gMatrix = array_map(function($val) use ($m) {
+        return $val / $m;
+    }, $gMatrix);
 
-        //Menghitung CI
-        $ci = ($lambdaMax - $n) / ($n - 1);
+    // Matriks jarak alternatif
+    $qMatrix = [];
+    foreach ($weightedMatrix as $id_jenis_pengaduan => $row) {
+        $qRow = [];
+        foreach ($row as $key => $value) {
+            $qRow[$key] = $value - $gMatrix[$key - 1];
+        }
+        $qMatrix[$id_jenis_pengaduan] = $qRow;
+    }
 
-        //Menghitung CR
-        $ri = [0.0, 0.0, 0.58, 0.90, 1.12, 1.24, 1.32, 1.41, 1.45];
-        $cr = $ci / $ri[$n - 1];
+    // Hasil akhir MABAC
+    $finalScores = [];
+    foreach ($qMatrix as $id_jenis_pengaduan => $row) {
+        $finalScores[$id_jenis_pengaduan] = array_sum($row);
+    }
 
-        
+    // Dapatkan daftar ID jenis_pengaduan yang valid
+    $validJenisPengaduanIds = DB::table('jenis_pengaduan')->pluck('id_jenis_pengaduan')->toArray();
 
-        // MABAC Calculation
+    // Simpan hasil ke database
+    foreach ($finalScores as $id_jenis_pengaduan => $score) {
+        if (in_array($id_jenis_pengaduan, $validJenisPengaduanIds)) {
+            DB::table('hasil_prioritas')->updateOrInsert(
+                ['id_jenis_pengaduan' => $id_jenis_pengaduan],
+                ['score' => $score]
+            );
+        }
+    }
 
-
-
-        $alternatif = DB::table('jenis_pengaduan')->get();
-        $penilaianAlternatif = PenilaianAlternatif::all();
-
-        $m = count($alternatif);
-        $k = count($kriteria);
-
-        // Membentuk matriks keputusan awal
-        $decisionMatrix = [];
-foreach ($penilaianAlternatif as $penilaian) {
-    $decisionMatrix[$penilaian->id_jenis_pengaduan][$penilaian->kriteria_id] = $penilaian->nilai;
+    return view('admin.prioritas.final', [
+        'eigenVector' => $eigenVector,
+        'lambdaMax' => $lambdaMax,
+        'ci' => $ci,
+        'cr' => $cr,
+        'finalScores' => $finalScores,
+        'breadcrumb' => $breadcrumb, 
+        'page' => $page, 
+        'activeMenu' => $activeMenu
+    ]);
 }
 
-
-        // Normalisasi elemen matriks
-        $normalizedMatrix = [];
-        foreach ($decisionMatrix as $row) {
-            $normalizedRow = [];
-            foreach ($row as $key => $value) {
-                if ($kriteria->find($key)->tipe == 'benefit') {
-                    $normalizedRow[$key] = $value / max(array_column($decisionMatrix, $key));
-                } else {
-                    $normalizedRow[$key] = min(array_column($decisionMatrix, $key)) / $value;
-                }
-            }
-            $normalizedMatrix[] = $normalizedRow;
-        }
-
-        // Matriks tertimbang
-        $weightedMatrix = [];
-        foreach ($normalizedMatrix as $row) {
-            $weightedRow = [];
-            foreach ($row as $key => $value) {
-                $weightedRow[$key] = $value * $eigenVector[$key - 1];
-            }
-            $weightedMatrix[] = $weightedRow;
-        }
-
-        // Matriks area perkiraan perbatasan
-        $gMatrix = array_fill(0, $k, 0);
-        foreach ($weightedMatrix as $row) {
-            foreach ($row as $key => $value) {
-                $gMatrix[$key - 1] += $value;
-            }
-        }
-        $gMatrix = array_map(function($val) use ($m) {
-            return $val / $m;
-        }, $gMatrix);
-
-        // Matriks jarak alternatif
-        $qMatrix = [];
-        foreach ($weightedMatrix as $row) {
-            $qRow = [];
-            foreach ($row as $key => $value) {
-                $qRow[$key] = $value - $gMatrix[$key - 1];
-            }
-            $qMatrix[] = $qRow;
-        }
-
-        // Hasil akhir MABAC
-        $finalScores = array_map(function($row) {
-            return array_sum($row);
-        }, $qMatrix);
-
-        return view('admin.prioritas.final', [
-            'eigenVector' => $eigenVector,
-            'lambdaMax' => $lambdaMax,
-            'ci' => $ci,
-            'cr' => $cr,
-            'finalScores' => $finalScores,
-            'breadcrumb' => $breadcrumb, 
-            'page' => $page, 
-            'activeMenu' => $activeMenu
-        ]);
-    }
 
     public function tampilKriteria() 
     {
