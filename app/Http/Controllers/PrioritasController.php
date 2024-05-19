@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Kriteria;
+use App\Models\PengaduanModel;
 use App\Models\PerbandinganKriteria;
 use App\Models\PenilaianAlternatif;
 use Yajra\DataTables\Facades\DataTables;
@@ -202,6 +203,56 @@ class PrioritasController extends Controller
             ->rawColumns(['aksi'])
             ->make(true);
     }
+
+    public function tampilPrioritas()
+{
+    $breadcrumb = (object) [
+        'title' => '',
+        'list' => ['Home', 'pengaduan prioritas']
+    ];
+
+    $page = (object) [
+        'title' => 'Dashboard admin'
+    ];
+    $activeMenu = 'hasil';
+
+    return view('admin.prioritas.pengaduan', [
+        'breadcrumb' => $breadcrumb, 
+        'page' => $page, 
+        'activeMenu' => $activeMenu
+    ]);
+}
+
+
+
+
+public function getPengaduanData()
+{
+    $query = DB::table('v_pengaduan as vp')
+        ->join('jenis_pengaduan as jp', 'vp.id_jenis_pengaduan', '=', 'jp.id_jenis_pengaduan')
+        ->join('hasil_prioritas as hp', 'vp.id_jenis_pengaduan', '=', 'hp.id_jenis_pengaduan')
+        ->where('vp.id_status_pengaduan', function ($subQuery) {
+            $subQuery->select('id_status_pengaduan')
+                ->from('status_pengaduan')
+                ->where('status_kode', 'ACCEPT')
+                ->limit(1);
+        })
+        ->select('vp.id_pengaduan', 'jp.id_jenis_pengaduan', 'jp.pengaduan_nama', 'vp.id_status_pengaduan', 'hp.score')
+        ->orderBy('hp.score', 'DESC');
+        
+    return DataTables::of($query)
+        ->addColumn('action', function ($row) { // menambahkan kolom aksi
+            $btn = '<a href="'.url('/jpengaduan/' . $row->id_jenis_pengaduan . '/edit').'" class="btn btn-warning btn-sm"><i class="fas fa-tasks"></i> Tindak</a> ';
+            return $btn;
+        })
+        ->rawColumns(['action'])
+        ->make(true);
+}
+
+
+
+
+
 
 
 }

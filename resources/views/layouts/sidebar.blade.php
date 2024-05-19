@@ -40,7 +40,7 @@
                     <p>Pengaduan Warga</p>
                 </a>
             </li>
-            <li class="nav-header">Penentu Prioritas Pengaduan</li>
+            <li class="nav-header">Perhitungan Prioritas Pengaduan</li>
             <li class="nav-item">
                 <a href="{{ url('/prioritas/kriteria') }}" class="nav-link {{ ($activeMenu == 'kriteria') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-clipboard-list"></i>
@@ -50,7 +50,13 @@
             <li class="nav-item">
                 <a href="{{ url('/prioritas/hasil') }}" class="nav-link {{ ($activeMenu == '') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-calculator"></i>
-                    <p>Hasil Perangkingan</p>
+                    <p>Hasil Perhitungan</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('/prioritas/pengaduan') }}" class="nav-link {{ ($activeMenu == '') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-flag"></i>
+                    <p>Prioritas Pengaduan</p>
                 </a>
             </li>
             <li class="nav-item">

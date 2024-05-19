@@ -160,6 +160,10 @@ Route::group(['prefix' => 'prioritas'], function () {
 Route::get('/kriteria', [PrioritasController::class, 'tampilKriteria']);
 Route::post('/list', [PrioritasController::class, 'listKriteria']);
 Route::get('/hasil', [PrioritasController::class, 'calculate']);
+Route::get('/pengaduan', [PrioritasController::class, 'tampilPrioritas']);
+Route::get('/data', [PrioritasController::class, 'getPengaduanData'])->name('prioritas.pengaduan.data');
+
+
     });
 });
 
