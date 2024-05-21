@@ -8,6 +8,7 @@ use App\Models\Kriteria;
 use App\Models\PengaduanModel;
 use App\Models\PerbandinganKriteria;
 use App\Models\PenilaianAlternatif;
+use Exception;
 use Yajra\DataTables\Facades\DataTables;
 
 class PrioritasController extends Controller
@@ -59,32 +60,33 @@ class PrioritasController extends Controller
     }
 
     // Menghitung Rata-rata Baris (Eigenvector)
-    $eigenVector = array_fill(0, $n, 0.0);
-    for ($i = 0; $i < $n; $i++) {
-        $sum = 0.0;
-        for ($j = 0; $j < $n; $j++) {
-            $sum += $normalizedMatrix[$i][$j];
-        }
-        $eigenVector[$i] = $sum / $n;
+$eigenVector = array_fill(0, $n, 0.0);
+for ($i = 0; $i < $n; $i++) {
+    $sum = 0.0;
+    for ($j = 0; $j < $n; $j++) {
+        $sum += $normalizedMatrix[$i][$j];
     }
+    $eigenVector[$i] = round($sum / $n, 3); // Mengambil 3 angka di belakang koma
+}
 
-    // Menghitung λ_max
-    $lambdaMax = 0.0;
-    for ($i = 0; $i < $n; $i++) {
-        $sum = 0.0;
-        for ($j = 0; $j < $n; $j++) {
-            $sum += $pairwiseMatrix[$i][$j] * $eigenVector[$j];
-        }
-        $lambdaMax += $sum / $eigenVector[$i];
+// Menghitung λ_max
+$lambdaMax = 0.0;
+for ($i = 0; $i < $n; $i++) {
+    $sum = 0.0;
+    for ($j = 0; $j < $n; $j++) {
+        $sum += $pairwiseMatrix[$i][$j] * $eigenVector[$j];
     }
-    $lambdaMax /= $n;
+    $lambdaMax += $sum / $eigenVector[$i];
+}
+$lambdaMax = round($lambdaMax / $n, 3); // Mengambil 3 angka di belakang koma
 
-    // Menghitung CI
-    $ci = ($lambdaMax - $n) / ($n - 1);
+// Menghitung CI
+$ci = round(($lambdaMax - $n) / ($n - 1), 3);
 
-    // Menghitung CR
-    $ri = [0.0, 0.0, 0.58, 0.90, 1.12, 1.24, 1.32, 1.41, 1.45];
-    $cr = $ci / $ri[$n - 1];
+// Menghitung CR
+$ri = [0.0, 0.0, 0.58, 0.90, 1.12, 1.24, 1.32, 1.41, 1.45];
+$cr = round($ci / $ri[$n - 1], 3);
+
 
     // MABAC Calculation
 
@@ -102,54 +104,85 @@ class PrioritasController extends Controller
 
     // Normalisasi elemen matriks
     $normalizedMatrix = [];
-    foreach ($decisionMatrix as $id_jenis_pengaduan => $row) {
-        $normalizedRow = [];
-        foreach ($row as $key => $value) {
-            if ($kriteria->find($key)->tipe == 'benefit') {
-                $normalizedRow[$key] = $value / max(array_column($decisionMatrix, $key));
-            } else {
-                $normalizedRow[$key] = min(array_column($decisionMatrix, $key)) / $value;
-            }
+foreach ($decisionMatrix as $id_jenis_pengaduan => $row) {
+    $normalizedRow = [];
+    foreach ($row as $key => $value) {
+        $kriteriaItem = $kriteria->find($key);
+
+        // Debugging: Cetak jenis kriteria
+        // dd($kriteriaItem);
+
+        if (!$kriteriaItem) {
+            continue; // Lewati jika kriteria tidak ditemukan
         }
-        $normalizedMatrix[$id_jenis_pengaduan] = $normalizedRow;
+
+        $columnValues = array_column($decisionMatrix, $key);
+        $maxValue = max($columnValues);
+        $minValue = min($columnValues);
+
+        if ($kriteriaItem->jenis == 'benefit') {
+            if ($maxValue != $minValue) {
+                $normalizedRow[$key] = ($value - $minValue) / ($maxValue - $minValue);
+            } else {
+                $normalizedRow[$key] = 0;
+            }
+        } elseif ($kriteriaItem->jenis == 'cost') {
+            if ($maxValue != $minValue) {
+                $normalizedRow[$key] = ($maxValue - $value) / ($maxValue - $minValue);
+            } else {
+                $normalizedRow[$key] = 0;
+            }
+        } else {
+            // Tambahkan penanganan kesalahan jika jenis kriteria tidak valid
+            throw new Exception("Jenis kriteria tidak valid: " . $kriteriaItem->jenis);
+        }
     }
+    $normalizedMatrix[$id_jenis_pengaduan] = $normalizedRow;
+}
+
 
     // Matriks tertimbang
     $weightedMatrix = [];
     foreach ($normalizedMatrix as $id_jenis_pengaduan => $row) {
         $weightedRow = [];
         foreach ($row as $key => $value) {
-            $weightedRow[$key] = $value * $eigenVector[$key - 1];
+            // Menggunakan rumus: ($value * $eigenVector) + $eigenVector
+            $weightedRow[$key] = round(($value * $eigenVector[$key - 1]) + $eigenVector[$key - 1], 3); // Mengambil 3 angka di belakang koma
         }
         $weightedMatrix[$id_jenis_pengaduan] = $weightedRow;
     }
+    
 
-    // Matriks area perkiraan perbatasan
-    $gMatrix = array_fill(0, $k, 0);
-    foreach ($weightedMatrix as $row) {
-        foreach ($row as $key => $value) {
-            $gMatrix[$key - 1] += $value;
-        }
-    }
-    $gMatrix = array_map(function($val) use ($m) {
-        return $val / $m;
-    }, $gMatrix);
+// Matriks area perkiraan perbatasan
+$gMatrix = array_fill(0, $k, 1); // Inisialisasi dengan 1 untuk perkalian
 
-    // Matriks jarak alternatif
-    $qMatrix = [];
-    foreach ($weightedMatrix as $id_jenis_pengaduan => $row) {
-        $qRow = [];
-        foreach ($row as $key => $value) {
-            $qRow[$key] = $value - $gMatrix[$key - 1];
-        }
-        $qMatrix[$id_jenis_pengaduan] = $qRow;
+foreach ($weightedMatrix as $row) {
+    foreach ($row as $key => $value) {
+        $gMatrix[$key - 1] *= $value; // Perkalian nilai elemen dalam kolom
     }
+}
 
-    // Hasil akhir MABAC
-    $finalScores = [];
-    foreach ($qMatrix as $id_jenis_pengaduan => $row) {
-        $finalScores[$id_jenis_pengaduan] = array_sum($row);
+// Menghitung rata-rata geometris
+$gMatrix = array_map(function($val) use ($m) {
+    return round(pow($val, 1 / $m), 3); // Mengambil 3 angka di belakang koma
+}, $gMatrix);
+
+// Matriks jarak alternatif
+$qMatrix = [];
+foreach ($weightedMatrix as $id_jenis_pengaduan => $row) {
+    $qRow = [];
+    foreach ($row as $key => $value) {
+        $qRow[$key] = round($value - $gMatrix[$key - 1], 3); // Mengambil 3 angka di belakang koma
     }
+    $qMatrix[$id_jenis_pengaduan] = $qRow;
+}
+
+// Hasil akhir MABAC
+$finalScores = [];
+foreach ($qMatrix as $id_jenis_pengaduan => $row) {
+    $finalScores[$id_jenis_pengaduan] = round(array_sum($row), 3); // Mengambil 3 angka di belakang koma
+}
+
 
     // Dapatkan daftar ID jenis_pengaduan yang valid
     $validJenisPengaduanIds = DB::table('jenis_pengaduan')->pluck('id_jenis_pengaduan')->toArray();
@@ -169,10 +202,14 @@ class PrioritasController extends Controller
         'lambdaMax' => $lambdaMax,
         'ci' => $ci,
         'cr' => $cr,
-        'finalScores' => $finalScores,
         'breadcrumb' => $breadcrumb, 
         'page' => $page, 
-        'activeMenu' => $activeMenu
+        'activeMenu' => $activeMenu,
+        'kriteria' => $kriteria,
+        'normalizedMatrix' => $normalizedMatrix,
+        'weightedMatrix' => $weightedMatrix,
+        'gMatrix' => $gMatrix,
+        'finalScores' => $finalScores,
     ]);
 }
 
