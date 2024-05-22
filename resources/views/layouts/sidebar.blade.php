@@ -48,17 +48,24 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('/prioritas/hasil') }}" class="nav-link {{ ($activeMenu == '') ? 'active' : '' }}">
+                <a href="{{ url('/prioritas/pengaduanDiterima') }}" class="nav-link {{ ($activeMenu == '') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-calculator"></i>
-                    <p>Hasil Perhitungan</p>
+                    <p>Mengisi Nilai Alternatif</p>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('/prioritas/pengaduan') }}" class="nav-link {{ ($activeMenu == '') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-flag"></i>
-                    <p>Prioritas Pengaduan</p>
+                <a href="{{ url('/prioritas/perhitungan') }}" class="nav-link {{ ($activeMenu == '') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-calculator"></i>
+                    <p>Perhitungan</p>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ url('/hasil/accepted') }}" class="nav-link {{ ($activeMenu == 'hasil') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-calculator"></i>
+                    <p>Daftar Prioritas</p>
+                </a>
+            </li>
+            
             <li class="nav-item">
                 <a href="{{ route('logout') }}" class="nav-link {{ ($activeMenu == '') ? 'active' : '' }}" onclick="event.preventDefault(); confirmLogout();">
                     <i class="fas fa-sign-out-alt"></i>

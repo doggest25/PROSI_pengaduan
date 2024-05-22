@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('penilaian_alternatif', function (Blueprint $table) {
+        Schema::create('nilai_alternatif', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_jenis_pengaduan');
+            $table->unsignedBigInteger('id_pengaduan');
             $table->unsignedBigInteger('kriteria_id');
-            $table->decimal('nilai', 8, 4); // Nilai untuk kriteria pada alternatif tertentu
+            $table->decimal('nilai', 10, 2);
 
-            $table->foreign('id_jenis_pengaduan')->references('id_jenis_pengaduan')->on('jenis_pengaduan')->onDelete('cascade');
+            $table->foreign('id_pengaduan')->references('id_pengaduan')->on('v_pengaduan')->onDelete('cascade');
             $table->foreign('kriteria_id')->references('id')->on('kriteria')->onDelete('cascade');
 
             $table->timestamps();
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('penilaian_alternatif');
+        Schema::dropIfExists('nilai_alternatif');
     }
 };

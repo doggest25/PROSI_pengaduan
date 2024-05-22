@@ -9,18 +9,18 @@ class PenilaianAlternatif extends Model
 {
     use HasFactory;
 
-    protected $table = 'penilaian_alternatif';
+    protected $table = 'nilai_alternatif';
 
     protected $fillable = [
-        'id_jenis_pengaduan',
+        'id_pengaduan',
         'kriteria_id',
         'nilai',
     ];
 
-    public function jenisPengaduan()
-    {
-        return $this->belongsTo(JPengaduanModel::class, 'id_jenis_pengaduan');
-    }
+    public function nilaiAlternatif()
+{
+    return $this->hasMany(PenilaianAlternatif::class, 'id_pengaduan');
+}
 
     public function kriteria()
     {

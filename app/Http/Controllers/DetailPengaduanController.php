@@ -106,7 +106,7 @@ public function updateStatus(Request $request, $id)
     $pengaduan->save();
 
     // Redirect atau respons lainnya
-    return redirect()->back()->with('success', 'Status pengaduan berhasil diperbarui.');
+    return redirect('dpengaduan')->with('success', 'Status pengaduan berhasil diperbarui.');
 }
 
 
