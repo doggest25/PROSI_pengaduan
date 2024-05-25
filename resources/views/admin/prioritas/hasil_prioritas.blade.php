@@ -43,13 +43,13 @@
                     orderable: true,
                     searchable: true
                 },
-                {   data: "nama", 
+                {   data: "users.nama", 
                     name: "",
                     orderable: true,
                     searchable: true
                 },
                 {
-                    data: "pengaduan_nama", 
+                    data: "jenis_pengaduan.pengaduan_nama", 
                     name: "",
                     orderable: true,
                     searchable: true
@@ -59,13 +59,13 @@
                     orderable: true,
                     searchable: true
                 },
-                {   data: "final_score", 
+                {   data: "hasil_prioritas.final_score", 
                     name: "",
                     orderable: true,
                     searchable: true
                 },
                 {   data: 'aksi', 
-                    name: 'aksi', 
+                    className: "text-center", 
                     orderable: false, 
                     searchable: false
                 },

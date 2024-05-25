@@ -40,7 +40,7 @@
             </tr>
             <tr>
                 <th>Lokasi</th>
-                <td>{{ $detail->Lokasi }}</td>
+                <td>{{ $detail->lokasi }}</td>
             </tr>
             <tr>
                 <th>Dibuat</th>

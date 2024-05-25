@@ -3,7 +3,7 @@
 @section('content')
 <div class="card card-outline card-primary">
     <div class="card-header">
-        <h3 class="card-title">Tambah Nilai Pengaduan</h3>
+        
     </div>
     <div class="card-body">
         @if (session('success'))
@@ -14,27 +14,18 @@
         <form action="{{ url('/prioritas/simpan/' . $pengaduan->id_pengaduan) }}" method="POST">
             @csrf
             <div class="form-group">
-                <label for="biaya">Biaya (Cost):</label>
-                <select class="form-control" id="biaya" name="biaya">
-                    <option value="1">< Rp. 100.000</option>
-                    <option value="2">Rp. 100.000 - Rp. 200.000</option>
-                    <option value="3">Rp. 200.000 - Rp. 300.000</option>
-                    <option value="4">Rp. 300.000 - Rp. 400.000</option>
-                    <option value="5">> Rp. 400.000</option>
-                </select>
+                <label for="biaya">Perkiraan Kebutuhan Biaya :</label>
+                <input type="number" class="form-control" id="biaya_input" name="biaya_input" min="0" step="1000">
+                <input type="hidden" id="biaya" name="biaya">
             </div>
             <div class="form-group">
-                <label for="sdm">SDM (Cost):</label>
-                <select class="form-control" id="sdm" name="sdm">
-                    <option value="1">Sangat Sedikit (1-10)</option>
-                    <option value="2">Sedikit (11-20)</option>
-                    <option value="3">Sedang (21-30)</option>
-                    <option value="4">Banyak (31-40)</option>
-                    <option value="5">Sangat Banyak (41-50)</option>
-                </select>
+                <label for="sdm_input">Perkiraaan Kebutuhan Sumber Daya Manusia :</label>
+                <input type="number" class="form-control" id="sdm_input" name="sdm_input" min="1" step="1">
+                <input type="hidden" id="sdm" name="sdm">
             </div>
+            
             <div class="form-group">
-                <label for="efektivitas">Tingkat Efektivitas Solusi (Benefit):</label>
+                <label for="efektivitas">Tingkat Efektivitas Solusi :</label>
                 <select class="form-control" id="efektivitas" name="efektivitas">
                     <option value="1">Sangat Tidak Efektif (Solusi tidak berhasil)</option>
                     <option value="2">Tidak Efektif (Solusi kurang berhasil)</option>
@@ -44,7 +35,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="urgensi">Urgensi (Benefit):</label>
+                <label for="urgensi">Urgensi :</label>
                 <select class="form-control" id="urgensi" name="urgensi">
                     <option value="1">Sangat Rendah (Tidak mendesak)</option>
                     <option value="2">Rendah (Tidak terlalu mendesak)</option>
@@ -54,7 +45,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="dampak">Dampak Warga (Benefit):</label>
+                <label for="dampak">Dampak Terhadap Warga :</label>
                 <select class="form-control" id="dampak" name="dampak">
                     <option value="1">Sangat Rendah (Tidak berdampak signifikan)</option>
                     <option value="2">Rendah (Dampak ringan)</option>
@@ -70,3 +61,56 @@
     </div>
 </div>
 @endsection
+
+@push('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const biayaInput = document.getElementById('biaya_input');
+        const biayaHidden = document.getElementById('biaya');
+
+        biayaInput.addEventListener('input', function() {
+            const value = parseInt(biayaInput.value);
+
+            if (value < 100000) {
+                biayaHidden.value = 5;
+            } else if (value >= 100000 && value < 200000) {
+                biayaHidden.value = 4;
+            } else if (value >= 200000 && value < 300000) {
+                biayaHidden.value = 3;
+            } else if (value >= 300000 && value < 400000) {
+                biayaHidden.value = 2;
+            } else if (value >= 400000) {
+                biayaHidden.value = 1;
+            } else {
+                biayaHidden.value = '';
+            }
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sdmInput = document.getElementById('sdm_input');
+        const sdmHidden = document.getElementById('sdm');
+
+        sdmInput.addEventListener('input', function() {
+            const value = parseInt(sdmInput.value);
+
+            if (value >= 1 && value <= 10) {
+                sdmHidden.value = 5;
+            } else if (value >= 11 && value <= 20) {
+                sdmHidden.value = 4;
+            } else if (value >= 21 && value <= 30) {
+                sdmHidden.value = 3;
+            } else if (value >= 31 && value <= 40) {
+                sdmHidden.value = 2;
+            } else if (value >= 41 && value <= 50) {
+                sdmHidden.value = 1;
+            } else {
+                sdmHidden.value = '';
+            }
+        });
+    });
+</script>
+
+    
+@endpush

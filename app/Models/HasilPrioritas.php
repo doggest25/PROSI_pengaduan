@@ -15,4 +15,8 @@ class HasilPrioritas extends Model
         'final_score',
         
     ];
+    public function pengaduan()
+    {
+        return $this->belongsTo(PengaduanModel::class, 'id_pengaduan', 'id_pengaduan');
+    }
 }

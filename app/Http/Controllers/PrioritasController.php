@@ -14,6 +14,8 @@ use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Yajra\DataTables\Facades\DataTables;
 
+use function Laravel\Prompts\select;
+
 class PrioritasController extends Controller
 {
      public function calculate()
@@ -335,8 +337,8 @@ public function showPengaduan($id)
         $pengaduan = PengaduanModel::find($id);
         // Menampilkan halaman awal
         $breadcrumb = (object) [
-            'title' => ' Pengaduan diterima',
-            'list' => ['Home', 'Pengaduan diterima ']
+            'title' => 'Perkiraan Kebutuhan  Setiap Pengaduan',
+            'list' => ['Home', 'Form Penilaian Kriteria  ']
         ];
 
         $page = (object) [
@@ -609,17 +611,17 @@ public function index()
         PenilaianAlternatif::whereIn('id_pengaduan', $finishedPengaduanIds)->delete();
     }
 
-    // Query untuk pengaduan dengan status_kode 'ACCEPT'
-    $query = DB::table('v_pengaduan as vp')
-        ->join('hasil_prioritas as hp', 'vp.id_pengaduan', '=', 'hp.id_pengaduan')
-        ->join('v_user as us', 'vp.user_id', '=', 'us.user_id')
-        ->join('jenis_pengaduan as jp', 'vp.id_jenis_pengaduan', '=', 'jp.id_jenis_pengaduan')
-        ->join('status_pengaduan as sp', 'vp.id_status_pengaduan', '=', 'sp.id_status_pengaduan')
-        ->select('vp.*', 'us.nama', 'jp.pengaduan_nama', 'hp.final_score')
-        ->where('sp.status_kode', 'ACCEPT')
-        ->orderBy('hp.final_score', 'DESC');
+    $pengaduanList = PengaduanModel::with(['users', 'jenis_pengaduan', 'hasil_prioritas'])
+        ->whereHas('status_pengaduan', function ($query) {
+            $query->where('status_kode', 'ACCEPT');
+        })
+        ->whereHas('hasil_prioritas', function ($query) {
+            $query->whereNotNull('final_score');
+        })
+        ->select('id_pengaduan', 'user_id', 'id_jenis_pengaduan', 'deskripsi')
+        ->get();
 
-    return DataTables::of($query)
+    return DataTables::of($pengaduanList)
         ->addColumn('aksi', function ($row) {
             return '<a href="' . url('/hasil/' . $row->id_pengaduan) . '" class="btn btn-info btn-sm">Tindakan</a>';
         })

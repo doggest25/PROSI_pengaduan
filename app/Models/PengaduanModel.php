@@ -23,6 +23,10 @@ class PengaduanModel extends Model
     public function status_pengaduan(): BelongsTo {
         return $this->belongsTo(StatusPengaduanModel::class, 'id_status_pengaduan', 'id_status_pengaduan');
     }
+    public function hasil_prioritas()
+    {
+        return $this->hasOne(HasilPrioritas::class, 'id_pengaduan', 'id_pengaduan');
+    }
 
    
 

@@ -48,8 +48,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ url('/prioritas/pengaduanDiterima') }}" class="nav-link {{ ($activeMenu == '') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-calculator"></i>
+                <a href="{{ url('/prioritas/pengaduanDiterima') }}" class="nav-link {{ ($activeMenu == 'diterima') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-star"></i>
                     <p>Mengisi Nilai Alternatif</p>
                 </a>
             </li>
@@ -61,7 +61,7 @@
             </li>
             <li class="nav-item">
                 <a href="{{ url('/hasil/accepted') }}" class="nav-link {{ ($activeMenu == 'hasil') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-calculator"></i>
+                    <i class="nav-icon fas fa-exclamation" ></i>
                     <p>Daftar Prioritas</p>
                 </a>
             </li>
