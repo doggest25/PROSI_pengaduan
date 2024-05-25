@@ -266,7 +266,22 @@ class PrioritasController extends Controller
     }
     
     public function listDiterima(Request $request)
-{
+{   
+    // Filter untuk pengaduan dengan status_kode 'FINISH'
+   $finishedPengaduanIds = DB::table('v_pengaduan as vp')
+   ->join('status_pengaduan as sp', 'vp.id_status_pengaduan', '=', 'sp.id_status_pengaduan')
+   ->where('sp.status_kode', 'FINISH')
+   ->orWhere('sp.status_kode', 'ON GOING')
+   ->orWhere('sp.status_kode', 'DENIED')
+   ->pluck('vp.id_pengaduan')
+   ->toArray();
+
+
+   // Hapus id_pengaduan terkait dari tabel hasil_prioritas dan penilaian_alternatif
+   if (!empty($finishedPengaduanIds)) {
+       HasilPrioritas::whereIn('id_pengaduan', $finishedPengaduanIds)->delete();
+       PenilaianAlternatif::whereIn('id_pengaduan', $finishedPengaduanIds)->delete();
+   }
     // Mendapatkan semua ID pengaduan yang sudah memiliki nilai di PenilaianAlternatifModel
     $pengaduanSudahNilai = PenilaianAlternatif::pluck('id_pengaduan')->toArray();
 
@@ -282,12 +297,36 @@ class PrioritasController extends Controller
     return DataTables::of($detailPengaduan)
         ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
         ->addColumn('aksi', function ($detail) { // menambahkan kolom aksi
-            $btn = '<a href="'.url('/prioritas/' . $detail->id_pengaduan ).'" class="btn btn-info btn-sm">Tambah nilai </a> ';
+            $btn = '<a href="'.url('/hasil/detail/' . $detail->id_pengaduan ).'" class="btn btn-info btn-sm">Detail </a> ';
+            $btn .= '<a href="' . url('/prioritas/' . $detail->id_pengaduan) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Isi nilai</a>';
             
             return $btn;
         })
         ->rawColumns(['aksi']) // memberitahu bahwa kolom aksi adalah html
         ->make(true);
+}
+public function showPengaduan($id)
+{   
+    try {
+        $detail = PengaduanModel::findOrFail($id);
+    } catch (ModelNotFoundException $e) {
+        // Jika data tidak ditemukan, redirect atau tampilkan pesan kesalahan
+        return redirect()->back()->with('error', 'Data pengaduan tidak ditemukan.');
+    }
+    $status_pengaduan = StatusPengaduanModel::all(); // Retrieve all status pengaduan
+
+    $breadcrumb = (object) [
+        'title' => 'Detail Pengaduan',
+        'list' => ['Home', 'Pengaduan', 'Detail']
+    ];
+
+    $page = (object) [
+        'title' => 'Detail Pengaduan'
+    ];
+
+    $activeMenu = 'diterima'; //set menu yang aktif
+
+    return view('admin.prioritas.alternatif_detail', ['breadcrumb' => $breadcrumb, 'page' => $page, 'detail' => $detail, 'activeMenu' => $activeMenu,'status_pengaduan' => $status_pengaduan]);
 }
 
 
@@ -384,7 +423,170 @@ public function index()
         ];
 
         $activeMenu = 'hasil'; //set menu yang aktif
-
+         // AHP Calculation
+     $v_pengaduan = PengaduanModel::all();
+     // Mendapatkan Nilai Perbandingan
+     $kriteria = Kriteria::all();
+     $perbandinganKriteria = PerbandinganKriteria::all();
+ 
+     // Membuat Matriks Perbandingan Berpasangan
+     $n = count($kriteria);
+     $pairwiseMatrix = array_fill(0, $n, array_fill(0, $n, 1.0));
+ 
+     foreach ($perbandinganKriteria as $perbandingan) {
+         $i = $perbandingan->kriteria_1_id - 1;
+         $j = $perbandingan->kriteria_2_id - 1;
+         $nilai = $perbandingan->nilai_perbandingan;
+         $pairwiseMatrix[$i][$j] = $nilai;
+         $pairwiseMatrix[$j][$i] = 1 / $nilai;
+     }
+ 
+     // Menghitung Jumlah Kolom
+     $columnSums = array_fill(0, $n, 0.0);
+     for ($j = 0; $j < $n; $j++) {
+         for ($i = 0; $i < $n; $i++) {
+             $columnSums[$j] += $pairwiseMatrix[$i][$j];
+         }
+     }
+ 
+     // Normalisasi Matriks
+     $normalizedMatrix = array_fill(0, $n, array_fill(0, $n, 0.0));
+     for ($i = 0; $i < $n; $i++) {
+         for ($j = 0; $j < $n; $j++) {
+             $normalizedMatrix[$i][$j] = $pairwiseMatrix[$i][$j] / $columnSums[$j];
+         }
+     }
+ 
+     // Menghitung Rata-rata Baris (Eigenvector)
+     $eigenVector = array_fill(0, $n, 0.0);
+     for ($i = 0; $i < $n; $i++) {
+         $sum = 0.0;
+         for ($j = 0; $j < $n; $j++) {
+             $sum += $normalizedMatrix[$i][$j];
+         }
+         $eigenVector[$i] = round($sum / $n, 3); // Mengambil 3 angka di belakang koma
+     }
+ 
+     // Menghitung λ_max
+     $lambdaMax = 0.0;
+     for ($i = 0; $i < $n; $i++) {
+         $sum = 0.0;
+         for ($j = 0; $j < $n; $j++) {
+             $sum += $pairwiseMatrix[$i][$j] * $eigenVector[$j];
+         }
+         $lambdaMax += $sum / $eigenVector[$i];
+     }
+     $lambdaMax = round($lambdaMax / $n, 3); // Mengambil 3 angka di belakang koma
+ 
+     // Menghitung CI
+     $ci = round(($lambdaMax - $n) / ($n - 1), 3);
+ 
+     // Menghitung CR
+     $ri = [0.0, 0.0, 0.58, 0.90, 1.12, 1.24, 1.32, 1.41, 1.45];
+     $cr = round($ci / $ri[$n - 1], 3);
+ 
+     // MABAC Calculation
+ 
+     // Mengambil data dari tabel yang relevan
+     $alternatif = PengaduanModel::with('jenis_pengaduan')->get();
+ 
+     $penilaianAlternatif = PenilaianAlternatif::all();
+ 
+     // Jumlah alternatif dan kriteria
+     $m = count($alternatif);
+     $k = count($kriteria);
+ 
+     // Membentuk matriks keputusan awal
+      $decisionMatrix = [];
+     foreach ($penilaianAlternatif as $penilaian) {
+         $decisionMatrix[$penilaian->id_pengaduan][$penilaian->kriteria_id] = $penilaian->nilai;
+     }
+ 
+ 
+ 
+     // Normalisasi elemen matriks
+     $normalizedMatrix = [];
+     foreach ($decisionMatrix as $id_pengaduan => $row) {
+         $normalizedRow = [];
+         foreach ($row as $key => $value) {
+             $kriteriaItem = $kriteria->find($key);
+ 
+             if (!$kriteriaItem) {
+                 continue; // Lewati jika kriteria tidak ditemukan
+             }
+ 
+             $columnValues = array_column($decisionMatrix, $key);
+             $maxValue = max($columnValues);
+             $minValue = min($columnValues);
+ 
+             if ($kriteriaItem->jenis == 'benefit') {
+                 if ($maxValue != $minValue) {
+                     $normalizedRow[$key] = ($value - $minValue) / ($maxValue - $minValue);
+                 } else {
+                     $normalizedRow[$key] = 0;
+                 }
+             } elseif ($kriteriaItem->jenis == 'cost') {
+                 if ($maxValue != $minValue) {
+                     $normalizedRow[$key] = ($maxValue - $value) / ($maxValue - $minValue);
+                 } else {
+                     $normalizedRow[$key] = 0;
+                 }
+             } else {
+                 // Tambahkan penanganan kesalahan jika jenis kriteria tidak valid
+                 throw new Exception("Jenis kriteria tidak valid: " . $kriteriaItem->jenis);
+             }
+         }
+         $normalizedMatrix[$id_pengaduan] = $normalizedRow;
+     }
+ 
+     // Matriks tertimbang
+     $weightedMatrix = [];
+     foreach ($normalizedMatrix as $id_pengaduan => $row) {
+         $weightedRow = [];
+         foreach ($row as $key => $value) {
+             // Menggunakan rumus: ($value * $eigenVector) + $eigenVector
+             $weightedRow[$key] = round(($value * $eigenVector[$key - 1]) + $eigenVector[$key - 1], 3); // Mengambil 3 angka di belakang koma
+         }
+         $weightedMatrix[$id_pengaduan] = $weightedRow;
+     }
+ 
+     // Matriks area perkiraan perbatasan
+     $gMatrix = array_fill(0, $k, 1); // Inisialisasi dengan 1 untuk perkalian
+ 
+     foreach ($weightedMatrix as $row) {
+         foreach ($row as $key => $value) {
+             $gMatrix[$key - 1] *= $value; // Perkalian nilai elemen dalam kolom
+         }
+     }
+ 
+     // Menghitung rata-rata geometris
+     $gMatrix = array_map(function($val) use ($m) {
+         return round(pow($val, 1 / $m), 3); // Mengambil 3 angka di belakang koma
+     }, $gMatrix);
+ 
+     // Matriks jarak alternatif
+     $qMatrix = [];
+     foreach ($weightedMatrix as $id_pengaduan => $row) {
+         $qRow = [];
+         foreach ($row as $key => $value) {
+             $qRow[$key] = round($value - $gMatrix[$key - 1], 3); // Mengambil 3 angka di belakang koma
+         }
+         $qMatrix[$id_pengaduan] = $qRow;
+     }
+ 
+     // Hasil akhir MABAC
+     $finalScores = [];
+     foreach ($qMatrix as $id_pengaduan => $row) {
+         $finalScores[$id_pengaduan] = round(array_sum($row), 3); // Mengambil 3 angka di belakang koma
+     }
+ 
+     // Menyimpan hasil akhir ke database
+     foreach ($finalScores as $id_pengaduan => $finalScore) {
+         HasilPrioritas::updateOrCreate(
+             ['id_pengaduan' => $id_pengaduan],
+             ['final_score' => $finalScore]
+         );
+     }
        
 
         return view('admin.prioritas.hasil_prioritas', ['breadcrumb' => $breadcrumb, 'page' => $page,'activeMenu' => $activeMenu]);
@@ -392,11 +594,14 @@ public function index()
     public function listAcceptedPengaduan(Request $request)
 {
     // Filter untuk pengaduan dengan status_kode 'FINISH'
-    $finishedPengaduanIds = DB::table('v_pengaduan as vp')
-        ->join('status_pengaduan as sp', 'vp.id_status_pengaduan', '=', 'sp.id_status_pengaduan')
-        ->where('sp.status_kode', 'FINISH')
-        ->pluck('vp.id_pengaduan')
-        ->toArray();
+   $finishedPengaduanIds = DB::table('v_pengaduan as vp')
+    ->join('status_pengaduan as sp', 'vp.id_status_pengaduan', '=', 'sp.id_status_pengaduan')
+    ->where('sp.status_kode', 'FINISH')
+    ->orWhere('sp.status_kode', 'ON GOING')
+    ->orWhere('sp.status_kode', 'DENIED')
+    ->pluck('vp.id_pengaduan')
+    ->toArray();
+
 
     // Hapus id_pengaduan terkait dari tabel hasil_prioritas dan penilaian_alternatif
     if (!empty($finishedPengaduanIds)) {

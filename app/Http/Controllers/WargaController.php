@@ -138,10 +138,10 @@ class WargaController extends Controller
         try {
             PengaduanModel::destroy($id); //menghapus data level
 
-            return redirect('/warga/detail')->with('success', 'Data user berhasil dihapus');
+            return redirect('/warga/detail')->with('success', 'Data pengaduan berhasil dihapus');
         } catch (\Illuminate\Database\QueryException $e) {
             //jika terjadi error ketika menghapus data, redirect kembali ke halaman user dengan membawa pesan error
-            return redirect('/warga/detail')->with('error', 'Data user gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini' . $e->getMessage());
+            return redirect('/warga/detail')->with('error', 'Data pengaduan gagal dihapus karena masih terdapat tabel lain yang terkait dengan data ini' . $e->getMessage());
         }
     }
     

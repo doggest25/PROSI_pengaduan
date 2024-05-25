@@ -31,22 +31,44 @@
 <script>
     $(document).ready(function() {
         $('#pengaduan-table').DataTable({
-            processing: true,
             serverSide: true,
             ajax: {
-                url: "{{ url('hasil/list') }}",
-                type: "POST",
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
+                "url": "{{ url('hasil/list') }}",
+                "dataType": "json",
+                "type": "POST"
             },
             columns: [
-                {data: 'id_pengaduan', name: 'id_pengaduan'},
-                {data: 'nama', name: 'nama'},
-                {data: 'pengaduan_nama', name: 'pengaduan_nama'},
-                {data: 'deskripsi', name: 'deskripsi'},
-                {data: 'final_score', name: 'final_score'},
-                {data: 'aksi', name: 'aksi', orderable: false, searchable: false},
+                {   data: "id_pengaduan", 
+                    name: "",
+                    orderable: true,
+                    searchable: true
+                },
+                {   data: "nama", 
+                    name: "",
+                    orderable: true,
+                    searchable: true
+                },
+                {
+                    data: "pengaduan_nama", 
+                    name: "",
+                    orderable: true,
+                    searchable: true
+                },
+                {   data: "deskripsi", 
+                    name: "",
+                    orderable: true,
+                    searchable: true
+                },
+                {   data: "final_score", 
+                    name: "",
+                    orderable: true,
+                    searchable: true
+                },
+                {   data: 'aksi', 
+                    name: 'aksi', 
+                    orderable: false, 
+                    searchable: false
+                },
             ]
         });
     });

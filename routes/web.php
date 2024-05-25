@@ -160,6 +160,7 @@ Route::group(['middleware' => ['auth', 'cek_login:2']], function () {
         Route::get('/perhitungan', [PrioritasController::class, 'calculate']); // Letakkan ini sebelum rute dengan parameter dinamis
         Route::get('/pengaduanDiterima', [PrioritasController::class, 'tampilDiterima']);
         Route::post('/listDiterima', [PrioritasController::class, 'listDiterima']);
+       
 
         Route::get('/{id}', [PrioritasController::class, 'showFormNilai']);
         Route::post('/simpan/{id}', [PrioritasController::class, 'simpanNilai']);
@@ -167,13 +168,7 @@ Route::group(['middleware' => ['auth', 'cek_login:2']], function () {
 });
 
 
-
-
-
-
 Route::get('/users', [LevelController::class, 'index']);
-
-
 
 
 //hasil prioritas
@@ -181,6 +176,7 @@ Route::group(['middleware' => ['auth', 'cek_login:2']], function () {
     Route::group(['prefix' => 'hasil'], function () {
         Route::get('/accepted', [PrioritasController::class, 'index']);
         Route::post('/list', [PrioritasController::class, 'listAcceptedPengaduan']);
+        Route::get('/detail/{id}', [PrioritasController::class, 'showPengaduan']);
         Route::get('/{id}', [PrioritasController::class, 'show']);
         Route::post('/update_status_pengaduan/{id}', [PrioritasController::class, 'updateStatus'])->name('update_status_pengaduan2');
 
