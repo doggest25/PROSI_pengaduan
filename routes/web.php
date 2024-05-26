@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AhpController;
+use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\DetailPengaduanController;
 use App\Http\Controllers\HasilPrioritasController;
 use App\Http\Controllers\HomeController;
@@ -34,7 +35,7 @@ use Monolog\Level;
 
 
 //Dashboard admin
-//Route::get('/dashAdmin', [WelcomeController::class, 'index']);
+
 
 //About us page
 Route::get('/about', [AboutController::class, 'index']);
@@ -87,7 +88,7 @@ Route::group(['middleware' => ['auth', 'cek_login:2']], function () {
 
 
 //Dashboard warga
-//Route::get('/dashWarga', [WelcomeController::class, 'index2']);
+
 
 //Mengelola data warga ->warga
 Route::group(['middleware' => ['auth', 'cek_login:1']], function () {
@@ -117,7 +118,8 @@ Route::group(['prefix' => 'warga'], function () {
 
 //halaman awal website
 Route::get('/', [HomeController::class, 'index']);
-
+// Mengirim Kririk dan saran
+Route::post('/contact', [ContactFormController::class, 'store'])->name('contact.store');
 //login & register website
 
 

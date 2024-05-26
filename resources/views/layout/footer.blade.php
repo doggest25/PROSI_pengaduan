@@ -10,22 +10,24 @@
     <div class="row">
       <div class="col-6 col-12-medium">
         <section>
-          <form method="post" action="#">
+          <form method="post" action="{{ route('contact.store') }}">
+            @csrf
             <div class="row gtr-50">
-              <div class="col-6 col-12-small">
-                <input name="name" placeholder="Name" type="text" />
-              </div>
-              <div class="col-6 col-12-small">
-                <input name="email" placeholder="Email" type="text" />
-              </div>
-              <div class="col-12">
-                <textarea name="message" placeholder="Message"></textarea>
-              </div>
-              <div class="col-12">
-                <a href="#" class="form-button-submit button icon solid fa-envelope">Send Message</a>
-              </div>
+                <div class="col-6 col-12-small">
+                    <input name="name" placeholder="Name" type="text" required />
+                </div>
+                <div class="col-6 col-12-small">
+                    <input name="email" placeholder="Email" type="email" required />
+                </div>
+                <div class="col-12">
+                    <textarea name="message" placeholder="Message" required></textarea>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="form-button-submit button icon solid fa-envelope">Send Message</button>
+                </div>
             </div>
-          </form>
+        </form>
+        
         </section>
       </div>
       <div class="col-6 col-12-medium">
