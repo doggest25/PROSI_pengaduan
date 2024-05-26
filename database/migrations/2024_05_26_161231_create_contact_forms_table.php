@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('contact_forms', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_pesan');
             $table->string('name');
             $table->string('email');
             $table->text('message');

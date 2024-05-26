@@ -84,6 +84,7 @@ Route::group(['middleware' => ['auth', 'cek_login:2']], function () {
         Route::delete('/{id}', [DetailPengaduanController::class, 'destroy']); //menghapus data 
     });  
 });
+//Mengelola data kritik & saran pengaduan -> Admin
 Route::group(['middleware' => ['auth', 'cek_login:2']], function () {
     Route::group(['prefix' => 'pesan'], function () {
         Route::get('/', [AdminController::class, 'tampil']); //menampilkan halaman awal 

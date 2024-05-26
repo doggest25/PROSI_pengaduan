@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('contact_forms', function (Blueprint $table) {
-            $table->boolean('is_read')->default(false); 
+            $table->boolean('is_read')->default(false);
         });
     }
 
