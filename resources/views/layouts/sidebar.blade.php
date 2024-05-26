@@ -65,7 +65,15 @@
                     <p>Daftar Prioritas</p>
                 </a>
             </li>
-            
+
+            <li class="nav-header">Kritik & Saran</li>
+            <li class="nav-item">
+                <a href="{{ url('/pesan') }}" class="nav-link {{ ($activeMenu == 'pesan') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-clipboard-list"></i>
+                    <p>Pesan Kritik & Saran</p>
+                </a>
+            </li>
+
             <li class="nav-item">
                 <a href="{{ route('logout') }}" class="nav-link {{ ($activeMenu == '') ? 'active' : '' }}" onclick="event.preventDefault(); confirmLogout();">
                     <i class="fas fa-sign-out-alt"></i>

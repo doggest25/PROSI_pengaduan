@@ -84,7 +84,14 @@ Route::group(['middleware' => ['auth', 'cek_login:2']], function () {
         Route::delete('/{id}', [DetailPengaduanController::class, 'destroy']); //menghapus data 
     });  
 });
-
+Route::group(['middleware' => ['auth', 'cek_login:2']], function () {
+    Route::group(['prefix' => 'pesan'], function () {
+        Route::get('/', [AdminController::class, 'tampil']); //menampilkan halaman awal 
+        Route::post('/list', [AdminController::class, 'list']); //menampilkan data  dalam bentuk json untuk database
+        Route::get('/{id}', [AdminController::class, 'show']); //menampilkan detail
+        Route::delete('/{id}', [AdminController::class, 'destroy']); //menghapus data 
+    });  
+});
 
 
 //Dashboard warga
