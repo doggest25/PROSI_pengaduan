@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\ContactForm;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class ContactFormController extends Controller
 {
@@ -15,13 +14,9 @@ class ContactFormController extends Controller
             'email' => 'required|email|max:255',
             'message' => 'required|string',
         ]);
-    
-        $contactForm = ContactForm::create($request->all());
-    
-        // Kirim email ke pengguna
-        Mail::to($request->email)->send(new \App\Mail\ContactFormSubmitted($contactForm));
-    
-        return with('success', 'Message sent successfully!');
-    
+
+        ContactForm::create($request->all());
+
+        return redirect()->back()->with('success', 'Message sent successfully!');
     }
 }
