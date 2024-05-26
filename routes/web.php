@@ -95,8 +95,12 @@ Route::group(['middleware' => ['auth', 'cek_login:2']], function () {
 });
 
 
-//Dashboard warga
-
+//Dashboard tampil 
+Route::group(['middleware' => ['auth', 'cek_login:2']], function () {
+    Route::group(['prefix' => 'pesan'], function () {
+        Route::post('/list2', [AdminController::class, 'list2']); //menampilkan data  dalam bentuk json untuk database
+    });  
+});
 
 //Mengelola data warga ->warga
 Route::group(['middleware' => ['auth', 'cek_login:1']], function () {

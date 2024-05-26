@@ -110,14 +110,27 @@
     </div>
     <!-- bagian 2 -->
     <div class="col-md-6">
-      <div class="card-body ">
-        <div class="card mb-3 bg-gray "style="padding-left: 10px;">
-          <h1 class="d-inline-block" style="font-size:40px; font-weight: bold; font-family: Verdana; padding-bottom: 20px;">Welcome Admin</h1>
-          @auth
-          <h6><i class="fas fa-user"></i> {{ Auth::user()->nama }}</h6>
-          @endauth
-        </div>
+      <div class="card-body" style="position: relative;">
+        <h5>Pesan Kritik & Saran</h5>
+        <table class="table table-bordered table-striped table-hover table-sm">
+          <thead>
+              <tr>
+                  <th>Pesan</th>
+                  <th>Status Baca</th>
+              </tr>
+          </thead>
+          <tbody>
+              @foreach($pesan as $p)
+                  <tr>
+                      <td>{{ $p->message }}</td>
+                      <td>{{ $p->is_read ? 'Sudah Dibaca' : 'Belum Dibaca' }}</td>
+                  </tr>
+              @endforeach
+          </tbody>
+      </table>
+  </div>
       </div>
+      
     </div>
     
   </div>
@@ -140,21 +153,11 @@
     {{ $chart->script() }}
   </div>
 
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-
-
-
-
 @endsection
+
+@push('css')
+    
+@endpush
+@push('js')
+
+@endpush
