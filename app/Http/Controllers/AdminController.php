@@ -31,9 +31,8 @@ class AdminController extends Controller
         $lastComplaint = PengaduanModel::orderBy('created_at', 'desc')->first();
         $lastRegister = UserModel::orderBy('created_at', 'desc')->first();
 
-        $pesan = ContactForm::where('is_read', false)
-            ->select('message', 'is_read')
-            ->get();
+        $pesan = ContactForm::all();
+
 
         $activeMenu = 'dashboard';
 
@@ -69,7 +68,7 @@ class AdminController extends Controller
         ];
 
         $page = (object) [
-            'title' => 'Daftar jenis pengaduan yang terdaftar dalam sistem'
+            'title' => 'Daftar kritik & saran yang terdaftar dalam sistem'
         ];
 
         $activeMenu = 'pesan'; //set menu yang aktif

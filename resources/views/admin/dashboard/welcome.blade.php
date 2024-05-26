@@ -3,7 +3,8 @@
 @section('content')
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
- <!-- lapisan 1 -->
+ 
+<!-- lapisan 1 -->
 <div class="row">
   <div class="col-lg-3 col-6">
     <!-- small box -->
@@ -109,29 +110,39 @@
       </div>
     </div>
     <!-- bagian 2 -->
+    
     <div class="col-md-6">
       <div class="card-body" style="position: relative;">
-        <h5>Pesan Kritik & Saran</h5>
-        <table class="table table-bordered table-striped table-hover table-sm">
-          <thead>
-              <tr>
-                  <th>Pesan</th>
-                  <th>Status Baca</th>
-              </tr>
-          </thead>
-          <tbody>
-              @foreach($pesan as $p)
-                  <tr>
-                      <td>{{ $p->message }}</td>
-                      <td>{{ $p->is_read ? 'Sudah Dibaca' : 'Belum Dibaca' }}</td>
-                  </tr>
-              @endforeach
-          </tbody>
-      </table>
-  </div>
+        <div class="card">
+              <div class="card-header border-transparent">
+                   Kritik & Saran Terbaru <i class="fas fa-history"></i> 
+              </div>
+            
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table m-0">
+                    <thead>
+                        <tr>
+                            <th>Nama</th>
+                            <th>Pesan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($pesan as $p)
+                            <tr>
+                                <td>{{ $p->name }}</td>
+                                <td>{{ $p->message  }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                  </table>
+              </div>
+            </div>
+            <a class="btn btn-sm btn-primary mt-1 detail-button" href="{{ url('pesan/') }}">Detail</a>  
+        </div>
+        
       </div>
-      
-    </div>
+  </div>
     
   </div>
 </div>
@@ -155,9 +166,3 @@
 
 @endsection
 
-@push('css')
-    
-@endpush
-@push('js')
-
-@endpush
