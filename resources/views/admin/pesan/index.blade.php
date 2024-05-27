@@ -29,6 +29,15 @@
 @endsection
 
 @push('css')
+<style>
+    .message {
+        display: -webkit-box;
+        -webkit-line-clamp: 10; /* Jumlah baris yang diizinkan */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
 @endpush
 
 @push('js')
@@ -68,11 +77,10 @@
                 },
                 {
                     data: "message",
-                    className: "",
+                    className: "message",
                     orderable: true,
                     searchable: true
                 },
-             
                 {
                     data: "aksi",
                     className: "text-center",
@@ -81,15 +89,13 @@
                 }
             ],
             "createdRow": function(row, data, dataIndex) {
-            var status = data.is_read;
-            if (status === 'Sudah dilihat') {
-                $(row).find('td:eq(3)').html('<span class="badge badge-success">Sudah dilihat</span>');
-            } else if (status === 'Belum dilihat') {
-                $(row).find('td:eq(3)').html('<span class="badge badge-warning">Belum dilihat</span>');
-            } 
-            
-        }
-           
+                var status = data.is_read;
+                if (status === 'Sudah dilihat') {
+                    $(row).find('td:eq(3)').html('<span class="badge badge-success">Sudah dilihat</span>');
+                } else if (status === 'Belum dilihat') {
+                    $(row).find('td:eq(3)').html('<span class="badge badge-warning">Belum dilihat</span>');
+                }
+            }
         });
     });
 </script>
