@@ -39,9 +39,10 @@
                             <!-- Excerpt -->
                             <article class="box excerpt">
                                 <header>
-                                    <span class="date">July 30</span>
-                                    <h3><a href="#">Laporan Terbaru</a></h3>
+                                    <span class="date">{{ date('F j') }}</span> <!-- Tambahkan ini untuk menampilkan tanggal secara otomatis -->
+                                    <h3><a href="{{url('warga/detail')}}">Laporan Terbaru</a></h3>
                                 </header>
+                                
                                 <p>PeduLingkungan baru saja menghadapi 
                                     tantangan baru dalam menjalankan misi
                                     kami untuk melindungi lingkungan. 
@@ -59,42 +60,45 @@
                     <ul class="divided">
                         <li>
                             <!-- Highlight -->
-                            <article class="box highlight">
-                                <header>
-                                    <h3><a href="#">Events</a></h3>
+                            <article class="card">
+                                <header class="card-header">
+                                    <h3 class="card-title"><a href="#">Events</a></h3>
                                 </header>
-                                <ul>
-                                    <li>
-                                        <span class="date">5 Mei 2024 </span>
-                                        <h4><a href="#">Membersihkan Selokan</a></h4>
-                                        <p>Gotong royong membersihkan selokan dilakukan pada hari Minggu di seluruh RT 03 .</p>
-                                    </li>
-                                    <li>
-                                        <span class="date">12 Mei 2024</span>
-                                        <h4><a href="#">Menebang Pohon</a></h4>
-                                        <p>Gotong royong menebang pohon di pinggir jalan yang sudah tua pada hari Minggu di seluruh lingkungan RW.</p>
-                                    </li>
-                                    <li>
-                                        <span class="date">26 Mei 2024</span>
-                                        <h4><a href="#">Kebersihan Lingkungan</a></h4>
-                                        <p>Gotong royong memotong rumput dilakukan pada hari Minggu di seluruh jalan pada lingkungan RW.</p>
-                                    </li>
-                                    <li>
-                                        <span class="date">9 Juni 2024</span>
-                                        <h4><a href="#">Perbaikan Infrastruktur</a></h4>
-                                        <p>Gotong royong dalam merawat taman yang berada pada RT 05 dilakukan pada hari Minggu.</p>
-                                    </li>
-                                    <li>
-                                        <span class="date">30 Juni 2024</span>
-                                        <h4><a href="#">Rapat RT</a></h4>
-                                        <p>Rapat untuk seluruh ketua RT dilaksanakan pada hari Minggu malam hari .</p>
-                                    </li>
-                                </ul>
+                                <div class="card-body">
+                                    <ul class="list-unstyled">
+                                        <li>
+                                            <span class="date">5 Mei 2024 </span>
+                                            <h4 class = "text-center" ><a href="{{url('warga/detail')}}">Membersihkan Selokan</a></h4>
+                                            <p>Gotong royong membersihkan selokan dilakukan pada hari Minggu di seluruh RT 03 .</p>
+                                        </li>
+                                        <li>
+                                            <span class="date">12 Mei 2024</span>
+                                            <h4 class = "text-center" ><a href="{{url('warga/detail')}}">Menebang Pohon</a></h4>
+                                            <p>Gotong royong menebang pohon di pinggir jalan yang sudah tua pada hari Minggu di seluruh lingkungan RW.</p>
+                                        </li>
+                                        <li>
+                                            <span class="date">26 Mei 2024</span>
+                                            <h4 class = "text-center" ><a href="{{url('warga/detail')}}">Kebersihan Lingkungan</a></h4>
+                                            <p>Gotong royong memotong rumput dilakukan pada hari Minggu di seluruh jalan pada lingkungan RW.</p>
+                                        </li>
+                                        <li>
+                                            <span class="date">9 Juni 2024</span>
+                                            <h4 class = "text-center" ><a href="{{url('warga/detail')}}">Perbaikan Infrastruktur</a></h4>
+                                            <p>Gotong royong dalam merawat taman yang berada pada RT 05 dilakukan pada hari Minggu.</p>
+                                        </li>
+                                        <li>
+                                            <span class="date">30 Juni 2024</span>
+                                            <h4 class = "text-center" ><a href="{{url('warga/detail')}}">Rapat RT</a></h4>
+                                            <p>Rapat untuk seluruh ketua RT dilaksanakan pada hari Minggu malam hari .</p>
+                                        </li>
+                                    </ul>
+                                </div>
                             </article>
+                            
                         </li>
                         <li>
                             <!-- Highlight -->
-                            <article class="box highlight">
+                            {{-- <article class="box highlight">
                                 <header>
                                     <h3><a href="#">Catatan</a></h3>
                                 </header>
@@ -102,7 +106,7 @@
                                 <ul class="actions">
                                     <li><a href="#" class="button icon solid fa-file">Learn More</a></li>
                                 </ul>
-                            </article>
+                            </article> --}}
                         </li>
                     </ul>
                 </section>

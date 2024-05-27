@@ -1,26 +1,20 @@
-
 @extends('layout.template')
 
 @section('content')
 @if(session('success'))
-        <div class="alert alert-success"> {{ session('success') }} </div>
-        @endif
-        @if(session('error'))
-        <div class="alert alert-danger"> {{ session('error') }} </div>
-        @endif
+    <div class="alert alert-success"> {{ session('success') }} </div>
+@endif
+@if(session('error'))
+    <div class="alert alert-danger"> {{ session('error') }} </div>
+@endif
+
 <!-- Banner -->
-<section id="banner">
-    <!--
-        ".inner" is set up as an inline-block so it automatically expands
-        in both directions to fit whatever's inside it. This means it won't
-        automatically wrap lines, so be sure to use line breaks where
-        appropriate (<br />).
-    -->
+<section id="banner" style="background: url('{{ asset('images/background-pattern.jpg') }}') repeat; background-color: #f2f2f2;">
     <div class="inner">
         <header>
-            <h2>Aduanmu Penting Bagi Kami</h2>
+            <h2 style="color: grey;">Aduanmu Penting Bagi Kami</h2>
         </header>
-        <p>selamat datang di <strong><a href="{{url('/about')}}">Peduli Lingkungan</a></strong> Website
+        <p style="color: grey;">Selamat datang di <strong><a href="{{url('/about')}}" style="color: #ffcc00; transition: color 0.3s;" onmouseover="this.style.color='#ff6600'" onmouseout="this.style.color='#ffcc00'">Peduli Lingkungan</a></strong> Website
             <br>
             <br>
         </p>
@@ -32,17 +26,18 @@
     </div>
 </section>
 
+
 <!-- Features -->
-<section id="features">
+<section id="features" style="padding: 2em 0; background-color: #f9f9f9;">
     <div class="container">
         <header>
             <h2><strong>Riwayat Pengaduan</strong></h2>
         </header>
-        <div class="row aln-center">
-            <div class="col-4 col-6-medium col-12-small">
+        <div class="row aln-center" style="display: flex; flex-wrap: wrap; justify-content: center;">
+            <div class="col-4 col-6-medium col-12-small" style="margin-bottom: 2em;">
                 <!-- Feature -->
-                <section>
-                    <a href="#" class="image featured"><img src="{{ asset('images/pic01.jpg')}}" alt="" /></a>
+                <section style="border: 1px solid #ddd; padding: 1em; background-color: #fff; border-radius: 8px;">
+                    <a href="#" class="image featured"><img src="{{ asset('images/pic01.jpg')}}" alt="" style="border-radius: 8px;"/></a>
                     <header>
                         <h3>Tanggal 5 Mei 2024</h3>
                     </header>
@@ -50,10 +45,10 @@
                     <p>Penyelesaian: Petugas kebersihan telah membersihkan taman dan mengambil tindakan pencegahan.</p>
                 </section>
             </div>
-            <div class="col-4 col-6-medium col-12-small">
+            <div class="col-4 col-6-medium col-12-small" style="margin-bottom: 2em;">
                 <!-- Feature -->
-                <section>
-                    <a href="#" class="image featured"><img src="{{ asset('images/pic02.jpg')}}" alt="" /></a>
+                <section style="border: 1px solid #ddd; padding: 1em; background-color: #fff; border-radius: 8px;">
+                    <a href="#" class="image featured"><img src="{{ asset('images/pic02.jpg')}}" alt="" style="border-radius: 8px;"/></a>
                     <header>
                         <h3>Tanggal 12 Mei 2024</h3>
                     </header>
@@ -61,10 +56,10 @@
                     <p>Penyelesaian: Tim pemadam kebakaran telah membersihkan pohon dan memperbaiki kerusakan yang disebabkan.</p>    
                 </section>
             </div>
-            <div class="col-4 col-6-medium col-12-small">
+            <div class="col-4 col-6-medium col-12-small" style="margin-bottom: 2em;">
                 <!-- Feature -->
-                <section>
-                    <a href="#" class="image featured"><img src="{{ asset('images/pic03.jpg')}}" alt="" /></a>
+                <section style="border: 1px solid #ddd; padding: 1em; background-color: #fff; border-radius: 8px;">
+                    <a href="#" class="image featured"><img src="{{ asset('images/pic03.jpg')}}" alt="" style="border-radius: 8px;"/></a>
                     <header>
                         <h3>Tanggal 19 Mei 2024</h3>
                     </header>
@@ -72,7 +67,7 @@
                     <p>Penyelesaian: Tim teknisi telah memperbaiki pipa dan menangani kebocoran dengan cepat.</p>
                 </section>
             </div>
-            <div class="col-12">
+            <div class="col-12" style="text-align: center; margin-top: 2em;">
                 <ul class="actions">
                     <li><a href="{{url('warga/detail')}}" class="button icon solid fa-file">Lihat Detail</a></li>
                 </ul>
@@ -81,3 +76,5 @@
     </div>
 </section>
 @endsection
+
+
