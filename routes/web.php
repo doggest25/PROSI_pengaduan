@@ -161,16 +161,17 @@ Route::group(['middleware' => ['auth']], function () {
     });
 });
 
-
-
-
-
-
-//prioritas pengaduan
 Route::group(['middleware' => ['auth', 'cek_login:2']], function () {
     Route::group(['prefix' => 'prioritas'], function () {
         Route::get('/kriteria', [PrioritasController::class, 'tampilKriteria']);
         Route::post('/list', [PrioritasController::class, 'listKriteria']);
+
+    });
+});
+
+//prioritas pengaduan
+Route::group(['middleware' => ['auth', 'cek_login:2']], function () {
+    Route::group(['prefix' => 'prioritas'], function () {
         Route::get('/perhitungan', [PrioritasController::class, 'calculate']); // Letakkan ini sebelum rute dengan parameter dinamis
         Route::get('/pengaduanDiterima', [PrioritasController::class, 'tampilDiterima']);
         Route::post('/listDiterima', [PrioritasController::class, 'listDiterima']);

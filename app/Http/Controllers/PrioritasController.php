@@ -245,7 +245,14 @@ class PrioritasController extends Controller
 
         return DataTables::of($kriteria)
             ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
-            
+            ->addColumn('aksi', function ($typeComplain) { // menambahkan kolom aksi
+                $btn = '<a href="'.url('/jpengaduan/' . $typeComplain->id_jenis_pengaduan).'" class="btn btn-info btn-sm">Detail</a> ';
+                $btn .= '<a href="'.url('/jpengaduan/' . $typeComplain->id_jenis_pengaduan . '/edit').'" class="btn btn-warning btn-sm">Edit</a> ';
+                $btn .= '<form class="d-inline-block" method="POST" action="'. url('/jpengaduan/'.$typeComplain->id_jenis_pengaduan).'">'.
+                            csrf_field() . method_field('DELETE') .
+                            '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';
+                return $btn;
+            })
             ->rawColumns(['aksi'])
             ->make(true);
     }
@@ -332,28 +339,33 @@ public function showPengaduan($id)
 }
 
 
-    public function showFormNilai($id)
-    {
-        $pengaduan = PengaduanModel::find($id);
-        // Menampilkan halaman awal
-        $breadcrumb = (object) [
-            'title' => 'Perkiraan Kebutuhan  Setiap Pengaduan',
-            'list' => ['Home', 'Form Penilaian Kriteria  ']
-        ];
+public function showFormNilai($id)
+{
+    $pengaduan = PengaduanModel::with('jenis_pengaduan','users')->find($id);
+    // Menampilkan halaman awal
+    $breadcrumb = (object) [
+        'title' => 'Perkiraan Kebutuhan Setiap Pengaduan',
+        'list' => ['Home', 'Form Penilaian Kriteria']
+    ];
 
-        $page = (object) [
-            'title' => 'Daftar Pengaduan yang diterima dalam sistem'
-        ];
+    $page = (object) [
+        'title' => 'form Pemberian Nilai'
+    ];
 
-        $activeMenu = 'diterima'; //set menu yang aktif
+    $activeMenu = 'diterima'; //set menu yang aktif
 
-        return view('admin.prioritas.input_nilai', [
-            'pengaduan' => $pengaduan,
-            'breadcrumb' => $breadcrumb,
-            'page' => $page,
-            'activeMenu' => $activeMenu
-        ]);
-    }
+    return view('admin.prioritas.input_nilai', [
+        'pengaduan' => $pengaduan,
+        'breadcrumb' => $breadcrumb,
+        'page' => $page,
+        'activeMenu' => $activeMenu,
+        'pengaduan_nama' => $pengaduan->jenis_pengaduan->pengaduan_nama,
+        'nama' => $pengaduan->users->nama,
+        'deskripsi' => $pengaduan->deskripsi,
+        'bukti_foto' => $pengaduan->bukti_foto,
+    ]);
+}
+
 
     public function simpanNilai(Request $request, $id)
 {

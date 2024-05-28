@@ -21,6 +21,7 @@
                     <th>ID</th>
                     <th>Kriteria</th>
                     <th>Jenis</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
         </table>
@@ -57,6 +58,12 @@
                 {
                     data: "jenis",
                     className: "",
+                    orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
+                    searchable: true // searchable: true, jika ingin kolom ini bisa dicari
+                },
+                {
+                    data: "aksi",
+                    className: "text-center",
                     orderable: true, // orderable: true, jika ingin kolom ini bisa diurutkan
                     searchable: true // searchable: true, jika ingin kolom ini bisa dicari
                 }
