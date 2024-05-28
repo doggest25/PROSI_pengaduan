@@ -31,7 +31,8 @@ class AdminController extends Controller
         $lastComplaint = PengaduanModel::orderBy('created_at', 'desc')->first();
         $lastRegister = UserModel::orderBy('created_at', 'desc')->first();
 
-        $pesan = ContactForm::all();
+        $pesan = ContactForm::where('is_read', 'Belum dilihat')->get();
+         
 
 
         $activeMenu = 'dashboard';
