@@ -14,7 +14,13 @@
         <header>
             <h2 style="color: grey;">Aduanmu Penting Bagi Kami</h2>
         </header>
-        <p style="color: grey;">Selamat datang di <strong><a href="{{url('/about')}}" style="color: #ffcc00; transition: color 0.3s;" onmouseover="this.style.color='#ff6600'" onmouseout="this.style.color='#ffcc00'">Peduli Lingkungan</a></strong> Website
+       
+        <p style="color: grey;">Selamat datang di 
+            <strong>
+                <a href="{{url('/about')}}" style="color: #ffcc00; transition: color 0.3s;" onmouseover="this.style.color='#ff6600'" onmouseout="this.style.color='#ffcc00'">
+                    <img src="{{ asset('picture/thr.png')}}" alt="" style="width: 200px; height: 150px;" />
+                </a>
+            </strong> Website
             <br>
             <br>
         </p>
@@ -25,7 +31,6 @@
         </footer>
     </div>
 </section>
-
 
 <!-- Features -->
 <section id="features" style="padding: 2em 0; background-color: #f9f9f9;">
@@ -78,3 +83,52 @@
 @endsection
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{-- hjasdkjashdjhjaskdhkjahdkjahdlhjasdkjashdjhjaskdhkjahdkjahdlhjasdkjashdjhjaskdhkjahdkjahdlhjasdkjashdjhjaskdhkjahdkjahdlhjasdkjashdjhjaskdhkjahdkjahdlhjasdkjashdjhjaskdhkjahdkjahdlhjasdkjashdjhjaskdhkjahdkjahdlhjasdkjashdjhjaskdhkjahdkjahdlhjasdkjashdjhjaskdhkjahdkjahdlhjasdkjashdjhjaskdhkjahdkjahdlhjasdkjashdjhjaskdhkjahdkjahdl
+    hjasdkjashdjhjaskdhkjahdkjahdlhjasdkjashdjhjaskdhkjahdkjahdlhjasdkjashdjhjaskdhkjahdkjahdl
+    hjasdkjashdjhjaskdhkjahdkjahdlhjasdkjashdjhjaskdhkjahdkjahdlhjasdkjashdjhjaskdhkjahdkjahdl
+    hjasdkjashdjhjaskdhkjahdkjahdlhjasdkjashdjhjaskdhkjahdkjahdlhjasdkjashdjhjaskdhkjahdkjahdlhjasdkjashdjhjaskdhkjahdkjahdl
+    hjasdkjashdjhjaskdhkjahdkjahdlhjasdkjashdjhjaskdhkjahdkjahdlhjasdkjashdjhjaskdhkjahdkjahdl
+    hjasdkjashdjhjaskdhkjahdkjahdlhjasdkjashdjhjaskdhkjahdkjahdl 
+    hjasdkjashdjhjaskdhkjahdkjahdl
+    hjasdkjashdjhjaskdhkjahdkjahdl
+    hjasdkjashdjhjaskdhkjahdkjahdl
+    hjasdkjashdjhjaskdhkjahdkjahdl
+    hjasdkjashdjhjaskdhkjahdkjahdl
+    hjasdkjashdjhjaskdhkjahdkjahdl
+    hjasdkjashdjhjaskdhkjahdkjahdl
+    hjasdkjashdjhjaskdhkjahdkjahdl
+
+    hjasdkjashdjhjaskdhkjahdkjahdl
+    hjasdkjashdjhjaskdhkjahdkjahdl
+    hjasdkjashdjhjaskdhkjahdkjahdl
+    hjasdkjashdjhjaskdhkjahdkjahdl
+    hjasdkjashdjhjaskdhkjahdkjahdl
+    hjasdkjashdjhjaskdhkjahdkjahdl --}}
