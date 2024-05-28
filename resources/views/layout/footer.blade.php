@@ -44,7 +44,7 @@
                   Jl. Soekarno Hatta No.9, Jatimulyo, Kec. Lowokwaru, Kota Malang, Jawa Timur 65141<br /> -->
                 </li>
                 <li class="icon solid fa-phone">
-                  0857-4937-9804
+                  <a href="https://wa.me/+6285749379804">085749379804</a>
                 </li>
                 <li class="icon solid fa-envelope">
                   <a href="#">pedulingkungan@gmail.com</a>
