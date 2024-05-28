@@ -47,14 +47,14 @@
                   <a href="https://wa.me/+6285749379804">085749379804</a>
                 </li>
                 <li class="icon solid fa-envelope">
-                  <a href="#">pedulingkungan@gmail.com</a>
+                  <a href="#">pedulingkungan2@gmail.com</a>
                 </li>
               </ul>
             </div>
             <div class="col-6 col-12-small">
               <ul class="icons">
-                <li class="icon brands fa-twitter">
-                  <a href="#">pedulingkungan@gmail.com</a>
+                <li class="icon fa-credit-card">
+                  <a href="https://saweria.co/pedulingkungan">Donasi</a>
                 </li>
                 <li class="icon brands fa-instagram">
                   <a href="#">pedulingkungan</a>
