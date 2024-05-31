@@ -431,11 +431,32 @@ public function editSubKriteria($kriteriaId)
 
 public function updateSubKriteria(Request $request, $kriteriaId)
 {
-    $request->validate([
+    
+    $data = $request->validate([
         'sub_kriteria.*.id' => 'required|exists:sub_kriteria,id',
         'sub_kriteria.*.name' => 'required|string|max:255',
-        'sub_kriteria.*.value' => 'nullable|integer',
+        'sub_kriteria.*.value' => [
+            'nullable',
+            'integer',
+            'min:1',
+            'max:5',
+            function ($attribute, $value, $fail) use ($request) {
+                $values = array_column($request->input('sub_kriteria'), 'value');
+                if (count($values) !== count(array_unique($values))) {
+                    $fail('Nilai sub kriteria tidak boleh ada yang sama.');
+                }
+            }
+        ],
+    ], [
+        'sub_kriteria.*.id.required' => 'ID sub kriteria harus diisi.',
+        'sub_kriteria.*.id.exists' => 'ID sub kriteria tidak valid.',
+        'sub_kriteria.*.name.required' => 'Nama sub kriteria harus diisi.',
+        'sub_kriteria.*.value.integer' => 'Nilai sub kriteria harus berupa angka.',
+        'sub_kriteria.*.value.min' => 'Nilai sub kriteria harus minimal 1.',
+        'sub_kriteria.*.value.max' => 'Nilai sub kriteria harus maksimal 5.',
     ]);
+
+    
 
     foreach ($request->sub_kriteria as $subKriteriaData) {
         $subKriteria = SubKriteria::findOrFail($subKriteriaData['id']);

@@ -1,13 +1,36 @@
 @extends('layouts.template')
 
 @section('content')
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 @if(session('success'))
 <div class="alert alert-success"> {{ session('success') }} </div>
 @endif
 @if(session('error'))
 <div class="alert alert-danger"> {{ session('error') }} </div>
 @endif
-
+<div class="card card-outline">
+    <div class="card-header bg-warning d-flex justify-content-between align-items-center">
+        <h3 class="card-title"><strong>Informasi Panduan Pengisian !</strong></h3>
+        <button class="btn btn-link ml-auto font-weight-bold" type="button" data-toggle="collapse" data-target="#featureInfo" aria-expanded="false" aria-controls="featureInfo">
+            <i class="bi bi-chevron-down"></i>
+        </button>
+    </div>
+    <div id="featureInfo" class="collapse card-body">
+        <p>1. <strong>Jika jenis Kriteria Cost</strong> ,semakin rendah suatu sub kriteria berarti semakin tinggi nilai yang diberikan<br></p>
+        <p>2. <strong>Jika jenis Kriteria Benefit</strong>,semakin tinggi suatu sub kriteria berarti semakin tinggi nilai yang diberikan <br></p>
+        <p>3. <strong>Range pemberian nilai</strong> hanya bisa 1-5 dan tidak boleh sama !<br></p>
+        <p>4. <strong>Disarankan!</strong> untuk mengisi dari atas kebawah,agar sub kriteria terurut.<br></p>
+            
+    </div>
+</div>
 <div class="card card-outline card-primary">
     <div class="card-header">
         <h3 class="card-title">Edit Sub-Kriteria untuk {{ $kriteria->nama }}</h3>
@@ -34,4 +57,6 @@
         <a href="{{ url()->previous() }}" class="btn btn-secondary mt-3">Kembali</a>
     </div>
 </div>
+
+
 @endsection

@@ -1,12 +1,54 @@
 @extends('layouts.template')
 
 @section('content')
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 @if(session('success'))
 <div class="alert alert-success"> {{ session('success') }} </div>
 @endif
 @if(session('error'))
 <div class="alert alert-danger"> {{ session('error') }} </div>
 @endif
+<div class="card card-outline">
+    <div class="card-header bg-warning d-flex justify-content-between align-items-center">
+        <h3 class="card-title"><strong>Informasi Panduan Pengisian !</strong></h3>
+        <button class="btn btn-link ml-auto font-weight-bold" type="button" data-toggle="collapse" data-target="#featureInfo" aria-expanded="false" aria-controls="featureInfo">
+            <i class="bi bi-chevron-down"></i>
+        </button>
+    </div>
+    <div id="featureInfo" class="collapse card-body">
+        <p><strong>! Ini merupakan Perbandingan Kriteria</strong>,dimana digunakan untuk menentukan bobot setiap kriteria</p>
+        <p><strong>! Disarankan untuk mengisi salah satu ambang</strong>, yaitu ambang atas atau bawah. karena misal ambang batas bawah diisi ambang atas otomatis terisi begitupun sebaliknya</p>
+        <p><strong>! Nilai yang diisi hanya boleh 1-9</strong> dan setiap nilai memiliki arti !</p>
+        
+            
+    </div>
+</div>
+<div class="card card-outline">
+    <div class="card-header bg-info d-flex justify-content-between align-items-center">
+        <h3 class="card-title"><strong>Informasi Arti Setiap Nilai !</strong></h3>
+        <button class="btn btn-link ml-auto font-weight-bold" type="button" data-toggle="collapse" data-target="#featureInfo1" aria-expanded="false" aria-controls="featureInfo">
+            <i class="bi bi-chevron-down"></i>
+        </button>
+    </div>
+    <div id="featureInfo1" class="collapse card-body">
+        <p><strong>Nilai 1 !</strong> Kedua elemen sama pentingnya</p>
+        <p><strong>Nilai 2 !</strong> Elemen yang satu sedikit lebih penting daripada elemen yang lainnya</p>
+        <p><strong>Nilai 5 !</strong> Elemen yang satu lebih penting daripada yang lainnya</p>
+        <p><strong>Nilai 7 !</strong> Satu elemen jelas lebih mutlak penting daripada elemen lainnya</p>
+        <p><strong>Nilai 9  !</strong> Satu elemen mutlak penting daripada elemen lainnya</p>
+        <p><strong>Nilai 3, 4, 6, 8 !</strong> Nilai-nilai antara dua nilai pertimbangan-pertimbangan yang berdekatan</p>
+        
+            
+    </div>
+</div>
 <div class="card card-outline card-primary">
     <div class="card-header">
         <h3 class="card-title">Edit Nilai Perbandingan Kriteria</h3>

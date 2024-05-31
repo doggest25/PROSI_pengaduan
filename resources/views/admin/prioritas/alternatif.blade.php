@@ -2,18 +2,35 @@
 @extends('layouts.template')
 
 @section('content')
+@if(session('success'))
+<div class="alert alert-success"> {{ session('success') }} </div>
+@endif
+@if(session('error'))
+<div class="alert alert-danger"> {{ session('error') }} </div>
+@endif
+<div class="card card-outline">
+    <div class="card-header bg-warning d-flex justify-content-between align-items-center">
+        <h3 class="card-title"><strong>Informasi fungsi fitur !</strong></h3>
+        <button class="btn btn-link ml-auto font-weight-bold" type="button" data-toggle="collapse" data-target="#featureInfo" aria-expanded="false" aria-controls="featureInfo">
+            <i class="bi bi-chevron-down"></i>
+        </button>
+    </div>
+    <div id="featureInfo" class="collapse card-body">
+        <p>1. Setiap pengaduan dengan status "<strong>Diterima</strong>", akan masuk ke pemberian nilai alternatif. <strong>Disini pengaduan menjadi alternatif</strong>.</p>
+        <p>2. <strong>Mengisi nilai perbandingan Alternatif dan Kriteria</strong>, dimana menentukan <strong>sub kriteria di setiap kriteria</strong> untuk menentukan <strong>prioritas</strong></p>
+        <p>3. <strong>Detail</strong>, melihat informasi detail dari pengaduan yang <strong>Diterima</strong></p>
+        <p>4. <strong>Isi Nilai</strong>, mengisi nilai alternatif setiap <strong>kriteria</strong> </p>
+        
+            
+    </div>
+</div>
 <div class="card card-outline card-primary">
     <div class="card-header">
         <h3 class="card-title">{{ $page->title }}</h3>
         
     </div>
     <div class="card-body">
-        @if(session('success'))
-        <div class="alert alert-success"> {{ session('success') }} </div>
-        @endif
-        @if(session('error'))
-        <div class="alert alert-danger"> {{ session('error') }} </div>
-        @endif
+       
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group row">

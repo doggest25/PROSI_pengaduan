@@ -1,6 +1,20 @@
 @extends('layouts.template')
 
 @section('content')
+<div class="card card-outline">
+    <div class="card-header bg-warning d-flex justify-content-between align-items-center">
+        <h3 class="card-title"><strong>Informasi fungsi fitur !</strong></h3>
+        <button class="btn btn-link ml-auto font-weight-bold" type="button" data-toggle="collapse" data-target="#featureInfo" aria-expanded="false" aria-controls="featureInfo">
+            <i class="bi bi-chevron-down"></i>
+        </button>
+    </div>
+    <div id="featureInfo" class="collapse card-body">
+        <p>1. <strong>Tambah</strong>, anda dapat menambahkan 2 jenis <strong>user</strong> berbeda disini <br></p>
+        <p>2. <strong>Detail</strong>, anda dapat melihat informasi <strong>user</strong> lebih detail<br></p>
+        <p>3. <strong>Edit Nilai</strong>, Anda dapat mengubah data <strong>user</strong> <br></p>
+        <p>4. <strong>Hapus</strong>, hati - hati saat menghapus <strong>user</strong> karena akan mengapus semua data <strong>user</strong> tersebut secara permanen ! <br></p>    
+    </div>
+</div>
 <div class="card card-outline card-primary">
     <div class="card-header">
         <h3 class="card-title">{{ $page->title }}</h3>

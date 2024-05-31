@@ -2,18 +2,33 @@
 @extends('layouts.template')
 
 @section('content')
+@if(session('success'))
+        <div class="alert alert-success"> {{ session('success') }} </div>
+        @endif
+        @if(session('error'))
+        <div class="alert alert-danger"> {{ session('error') }} </div>
+        @endif
+<div class="card card-outline">
+    <div class="card-header bg-warning d-flex justify-content-between align-items-center">
+        <h3 class="card-title"><strong>Informasi penting fitur !</strong></h3>
+        <button class="btn btn-link ml-auto font-weight-bold" type="button" data-toggle="collapse" data-target="#featureInfo" aria-expanded="false" aria-controls="featureInfo">
+            <i class="bi bi-chevron-down"></i>
+        </button>
+    </div>
+    <div id="featureInfo" class="collapse card-body">
+        <p>1. <strong>Status</strong>, Anda dapat melihat status dari pengaduan yang dilakukan oleh warga <br></p>
+        <p>2. <strong>Detail</strong>, anda dapat melihat informasi <strong>pengaduan</strong> lebih detail<br></p>
+        <p>3. <strong>Ubah Status</strong>, Anda dapat mengubah Status <strong>pengaduan </strong>di fitur <strong>detail</strong> yang dilakukan warga <br></p>
+        <p>4. <strong>Hapus</strong>, hati - hati saat menghapus <strong>pengaduan</strong> karena akan mengapus semua data <strong>pengaduan</strong> tersebut secara permanen ! <br></p>    
+    </div>
+</div>
 <div class="card card-outline card-primary">
     <div class="card-header">
         <h3 class="card-title">{{ $page->title }}</h3>
         
     </div>
     <div class="card-body">
-        @if(session('success'))
-        <div class="alert alert-success"> {{ session('success') }} </div>
-        @endif
-        @if(session('error'))
-        <div class="alert alert-danger"> {{ session('error') }} </div>
-        @endif
+        
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group row">

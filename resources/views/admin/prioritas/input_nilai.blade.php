@@ -7,7 +7,19 @@
 @if(session('error'))
 <div class="alert alert-danger">{{ session('error') }}</div>
 @endif
-
+<div class="card card-outline">
+    <div class="card-header bg-warning d-flex justify-content-between align-items-center">
+        <h3 class="card-title"><strong>Informasi pengisian nilai alternatif !</strong></h3>
+        <button class="btn btn-link ml-auto font-weight-bold" type="button" data-toggle="collapse" data-target="#featureInfo" aria-expanded="false" aria-controls="featureInfo">
+            <i class="bi bi-chevron-down"></i>
+        </button>
+    </div>
+    <div id="featureInfo" class="collapse card-body">
+        <p>1. <strong>Pilih dengan benar !</strong>, sub kriteria dari setiap <strong></strong>kriteria sesuai kebutuhan pengaduan yang diisi<br></p>
+        <p>2. <strong>Data !</strong>, yang diisi tidak dapat diubah karena akan masuk ke <strong>hasil prioritas</strong><br></p>
+       
+    </div>
+</div>
 <div class="card card-outline card-success">
     <div class="card-header">
         <h3 class="card-title">Detail Informasi Pengaduan !</h3>

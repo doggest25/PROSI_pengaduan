@@ -1,6 +1,20 @@
 @extends('layouts.template')
 
 @section('content')
+<div class="card card-outline">
+    <div class="card-header bg-warning d-flex justify-content-between align-items-center">
+        <h3 class="card-title"><strong>Informasi Status !</strong></h3>
+        <button class="btn btn-link ml-auto font-weight-bold" type="button" data-toggle="collapse" data-target="#featureInfo" aria-expanded="false" aria-controls="featureInfo">
+            <i class="bi bi-chevron-down"></i>
+        </button>
+    </div>
+    <div id="featureInfo" class="collapse card-body">
+        <p>1. <strong>Diproses</strong>, status awal pengaduan yang masuk<br></p>
+        <p>2. <strong>Diterima</strong>, pengaduan yang telah dicek dan memenuhi persyaratan untuk dilakukan perhitungan prioritas<br></p>
+        <p>3. <strong>Selesai</strong>, pengaduan yang selesai ditindak<br></p>
+        <p>4. <strong>Ditolak</strong>, pengaduan tidak memenuhi persyaratan<br></p>    
+    </div>
+</div>
 <div class="card card-outline card-primary">
     <div class="card-header">
         <h3 class="card-title">{{ $page->title }}</h3>
