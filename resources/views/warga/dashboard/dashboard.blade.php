@@ -15,15 +15,16 @@
             <h2 style="color: grey;">Aduanmu Penting Bagi Kami</h2>
         </header>
        
-        <p style="color: grey;">Selamat datang di 
-            <strong>
-                <a href="{{url('/about')}}" style="color: #ffcc00; transition: color 0.3s;" onmouseover="this.style.color='#ff6600'" onmouseout="this.style.color='#ffcc00'">
-                    <img src="{{ asset('picture/thr.png')}}" alt="" style="width: 200px; height: 150px;" />
-                </a>
-            </strong> Website
-            <br>
-            <br>
-        </p>
+        <p style="color: grey; text-align: center;">
+          Selamat datang di 
+          <strong>
+              <a href="{{ url('/about') }}" style="color: #ffcc00; transition: color 0.3s;" onmouseover="this.style.color='#ff6600'" onmouseout="this.style.color='#ffcc00'">
+                  <img src="{{ asset('picture/thr.png') }}" alt="Website Logo" style="width: 200px; height: 150px; vertical-align: middle; margin-right: 5px;" />
+              </a>
+          </strong>Website
+          <br><br>
+      </p>
+      
         <footer>
             <ul class="buttons stacked">
                 <li><a href="{{url('warga/pengaduan')}}" class="button fit scrolly">Adukan</a></li>
