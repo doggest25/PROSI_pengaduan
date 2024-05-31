@@ -165,7 +165,15 @@ Route::group(['middleware' => ['auth', 'cek_login:2']], function () {
     Route::group(['prefix' => 'prioritas'], function () {
         Route::get('/kriteria', [PrioritasController::class, 'tampilKriteria']);
         Route::post('/list', [PrioritasController::class, 'listKriteria']);
-
+        Route::get('/createKriteria', [PrioritasController::class, 'createKriteria']); //menampilkan halaman form tambah 
+        Route::post('/store', [PrioritasController::class, 'storeKriteria'])->name('kriteria.store');
+        Route::delete('/{id}', [PrioritasController::class, 'destroyKriteria']); //menghapus data
+        Route::get('/nilaiKriteria', [PrioritasController::class, 'editNilaiKriteria']);
+        Route::post('/update-nilai-kriteria', [PrioritasController::class, 'updateNilaiKriteria'])->name('update-nilai-kriteria');
+        Route::get('/{kriteria}/subkriteria/edit', [PrioritasController::class, 'editSubKriteria'])->name('edit-sub-kriteria');
+        Route::post('/{kriteria}/subkriteria/update', [PrioritasController::class, 'updateSubKriteria'])->name('update-sub-kriteria');
+        
+      
     });
 });
 

@@ -12,6 +12,7 @@
         <table class="table table-bordered table-striped table-hover table-sm" id="pengaduan-table">
             <thead>
                 <tr>
+                    <th>Nomor</th>
                     <th>No. pengaduan</th>
                     <th>Nama User</th>
                     <th>jenis</th>
@@ -38,6 +39,12 @@
                 "type": "POST"
             },
             columns: [
+                {
+                    data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
+                    className: "text-center",
+                    orderable: false,
+                    searchable: false
+                },
                 {   data: "id_pengaduan", 
                     name: "",
                     orderable: true,

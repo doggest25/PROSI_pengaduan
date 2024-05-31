@@ -10,6 +10,11 @@ class Kriteria extends Model
     use HasFactory;
     protected $table = "kriteria";
     protected $primaryKey = "id";
-    protected $fillable = ['nama'];
+    protected $fillable = ['nama','jenis'];
+
+    public function subKriteria()
+    {
+        return $this->hasMany(SubKriteria::class, 'kriteria_id');
+    }
 
 }
