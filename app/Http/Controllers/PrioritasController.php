@@ -171,7 +171,7 @@ foreach ($normalizedMatrix as $id_pengaduan => $row) {
     $weightedMatrix[$id_pengaduan] = $weightedRow;
 }
 
-// Matriks area perkiraan perbatasan
+/// Matriks area perkiraan perbatasan
 $gMatrix = array_fill_keys(array_keys($eigenVectorMapped), 1); // Initialize $gMatrix with the keys from $eigenVectorMapped
 
 foreach ($weightedMatrix as $row) {

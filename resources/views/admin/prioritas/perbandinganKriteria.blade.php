@@ -114,15 +114,29 @@
 @endpush
 @push('js')
 <script>
-    // Jika ingin mengubah nilai perbandingan secara dinamis
-    $('.nilai-perbandingan').change(function() {
-        var value = $(this).val();
-        var kriteriaId = $(this).attr('id').split('_')[2];
-        var subKriteriaId = $(this).attr('id').split('_')[3];
-        var nilai = 1 / value;
-        var roundedNilai = parseFloat(nilai).toFixed(3);
-        $('#nilai_perbandingan_' + subKriteriaId + '_' + kriteriaId).val(roundedNilai);
+    $(document).ready(function() {
+        // Jika ingin mengubah nilai perbandingan secara dinamis
+        $('.nilai-perbandingan').change(function() {
+            var value = parseFloat($(this).val());
+            var kriteriaId = $(this).attr('id').split('_')[2];
+            var subKriteriaId = $(this).attr('id').split('_')[3];
+
+            if (!isNaN(value) && value > 0) {
+                // Calculate the inverse and round to three decimal places
+                var nilai = 1 / value;
+                var roundedNilai = Math.round((nilai + Number.EPSILON) * 1000) / 1000;
+
+                // Ensure the rounded value has exactly three decimal places
+                var formattedNilai = roundedNilai.toFixed(3);
+
+                // Set the value in the corresponding input field
+                $('#nilai_perbandingan_' + subKriteriaId + '_' + kriteriaId).val(formattedNilai);
+            } else {
+                $('#nilai_perbandingan_' + subKriteriaId + '_' + kriteriaId).val('0.000');
+            }
+        });
     });
 </script>
+
 
 @endpush
