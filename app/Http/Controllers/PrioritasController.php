@@ -32,7 +32,7 @@ class PrioritasController extends Controller
     ];
     $activeMenu = 'prioritas';
 
- // AHP Calculation
+// AHP Calculation
 
 // Mendapatkan dan mengurutkan kriteria berdasarkan id
 $kriteria = Kriteria::orderBy('id')->get();
@@ -669,7 +669,7 @@ public function index()
 
         $activeMenu = 'hasil'; //set menu yang aktif
 
-      // AHP Calculation
+       // AHP Calculation
 
 // Mendapatkan dan mengurutkan kriteria berdasarkan id
 $kriteria = Kriteria::orderBy('id')->get();
@@ -808,7 +808,7 @@ foreach ($normalizedMatrix as $id_pengaduan => $row) {
     $weightedMatrix[$id_pengaduan] = $weightedRow;
 }
 
-/// Matriks area perkiraan perbatasan
+// Matriks area perkiraan perbatasan
 $gMatrix = array_fill_keys(array_keys($eigenVectorMapped), 1); // Initialize $gMatrix with the keys from $eigenVectorMapped
 
 foreach ($weightedMatrix as $row) {
