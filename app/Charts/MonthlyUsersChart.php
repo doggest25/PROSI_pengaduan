@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Charts;
 
 use ArielMejiaDev\LarapexCharts\LarapexChart;
@@ -14,33 +13,30 @@ class MonthlyUsersChart
         $this->chart = $chart;
     }
 
-    public function build(): \ArielMejiaDev\LarapexCharts\LineChart
-{
-    // Mengambil data total pengaduan yang selesai setiap bulan
-    $monthlyData = DB::table('v_pengaduan')
-        ->selectRaw('MONTH(updated_at) as month, COUNT(*) as total')
-        ->where('id_status_pengaduan', 4) // Anggap status 4 adalah status selesai
-        ->groupBy(DB::raw('MONTH(updated_at)'))
-        ->get();
+    public function build(): \ArielMejiaDev\LarapexCharts\BarChart
+    {
+        // Mengambil data total pengaduan yang selesai setiap bulan
+        $monthlyData = DB::table('v_pengaduan')
+            ->selectRaw('MONTH(updated_at) as month, COUNT(*) as total')
+            ->where('id_status_pengaduan', 4) // Anggap status 4 adalah status selesai
+            ->groupBy(DB::raw('MONTH(updated_at)'))
+            ->get();
 
-    // Mengisi array $data dengan total pengaduan yang selesai setiap bulan
-    $data = [];
-    foreach ($monthlyData as $item) {
-        $data[] = $item->total;
+        $data = array_fill(1, 12, 0);
+
+        foreach ($monthlyData as $item) {
+            $data[$item->month] = $item->total;
+        }
+
+        $monthNames = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $monthNames[] = date('F', mktime(0, 0, 0, $i, 1));
+        }
+
+        return $this->chart->barChart()
+            ->setTitle('Total Pengaduan Selesai Setiap Bulan')
+            ->setSubtitle('Tahun ' . date('Y'))
+            ->addData('Total', array_values($data))
+            ->setXAxis($monthNames);
     }
-
-    // Mendapatkan array nama bulan berdasarkan nilai bulan dari updated_at
-    $monthNames = array_map(function ($month) {
-        return date('F', mktime(0, 0, 0, $month, 1));
-    }, $monthlyData->pluck('month')->toArray());
-
-    // Menyusun data ke dalam chart
-    return $this->chart->lineChart()
-        ->setTitle('Total Pengaduan Selesai Setiap Bulan')
-        ->setSubtitle(date('Y'))
-        ->addData('Total', $data)
-        ->setXAxis($monthNames);
 }
-
-}
-
