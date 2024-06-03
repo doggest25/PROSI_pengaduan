@@ -32,7 +32,7 @@ class PrioritasController extends Controller
     ];
     $activeMenu = 'prioritas';
 
-// AHP Calculation
+ // AHP Calculation
 
 // Mendapatkan dan mengurutkan kriteria berdasarkan id
 $kriteria = Kriteria::orderBy('id')->get();
@@ -68,7 +68,7 @@ for ($j = 0; $j < $n; $j++) {
 $normalizedMatrix = array_fill(0, $n, array_fill(0, $n, 0.0));
 for ($i = 0; $i < $n; $i++) {
     for ($j = 0; $j < $n; $j++) {
-        $normalizedMatrix[$i][$j] = $pairwiseMatrix[$i][$j] / $columnSums[$j];
+        $normalizedMatrix[$i][$j] = round($pairwiseMatrix[$i][$j] / $columnSums[$j],3);
     }
 }
 
@@ -85,7 +85,7 @@ for ($i = 0; $i < $n; $i++) {
 // Mapping eigenvector values to criteria IDs
 $eigenVectorMapped = [];
 foreach ($kriteria as $index => $k) {
-    $eigenVectorMapped[$k->id] = $eigenVector[$index];
+    $eigenVectorMapped[$k->id] = round($eigenVector[$index],3);
 }
 
 // Menghitung λ_max
@@ -105,6 +105,7 @@ $ci = round(($lambdaMax - $n) / ($n - 1), 3);
 // Menghitung CR
 $ri = [0.0, 0.0, 0.58, 0.90, 1.12, 1.24, 1.32, 1.41, 1.45];
 $cr = round($ci / $ri[$n - 1], 3);
+
 
 // MABAC Calculation
 
