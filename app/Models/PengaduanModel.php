@@ -27,6 +27,10 @@ class PengaduanModel extends Model
     {
         return $this->hasOne(HasilPrioritas::class, 'id_pengaduan', 'id_pengaduan');
     }
+    public function nilaiAlternatif()
+{
+    return $this->hasMany(PenilaianAlternatif::class, 'id_pengaduan');
+}
 
    
 

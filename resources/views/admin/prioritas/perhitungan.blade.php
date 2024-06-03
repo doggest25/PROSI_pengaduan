@@ -23,6 +23,26 @@
 <p>λ_max: {{ $lambdaMax }}</p>
 <p>CI: {{ $ci }}</p>
 <p>CR: {{ $cr }}</p>
+<h1>Normalized Matrix</h1>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                @foreach ($normalizedMatrix[0] as $key => $value)
+                    <th>Column {{ $key + 1 }}</th>
+                @endforeach
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($normalizedMatrix as $row)
+                <tr>
+                    @foreach ($row as $value)
+                        <td>{{ number_format($value, 4) }}</td>
+                    @endforeach
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+
 
 <h1>Matriks Keputusan</h1>
 

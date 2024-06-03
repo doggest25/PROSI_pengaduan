@@ -668,7 +668,8 @@ public function index()
         ];
 
         $activeMenu = 'hasil'; //set menu yang aktif
-       // AHP Calculation
+
+      // AHP Calculation
 
 // Mendapatkan dan mengurutkan kriteria berdasarkan id
 $kriteria = Kriteria::orderBy('id')->get();
@@ -807,7 +808,7 @@ foreach ($normalizedMatrix as $id_pengaduan => $row) {
     $weightedMatrix[$id_pengaduan] = $weightedRow;
 }
 
-// Matriks area perkiraan perbatasan
+/// Matriks area perkiraan perbatasan
 $gMatrix = array_fill_keys(array_keys($eigenVectorMapped), 1); // Initialize $gMatrix with the keys from $eigenVectorMapped
 
 foreach ($weightedMatrix as $row) {
@@ -893,11 +894,77 @@ foreach ($finalScores as $id_pengaduan => $finalScore) {
     return DataTables::of($pengaduanList)
         ->addIndexColumn()
         ->addColumn('aksi', function ($row) {
-            return '<a href="' . url('/hasil/' . $row->id_pengaduan) . '" class="btn btn-info btn-sm">Tindakan</a>';
+            $btn = '<a href="' . url('/hasil/' . $row->id_pengaduan) . '" class="btn btn-info btn-sm">Tindakan </a>';
+            $btn .= ' ';
+            $btn .= '<a href="' . url('/hasil/edit-nilai/' . $row->id_pengaduan) . '" class="btn btn-warning btn-sm"><i class=" fas fa-edit"></i> edit nilai</a>';
+            
+            return  $btn;
         })
         ->rawColumns(['aksi'])
         ->make(true);
 }
+// app/Http/Controllers/PengaduanController.php
+
+public function editNilaiAlternatif($id)
+{
+     // Menampilkan halaman awal user
+     $breadcrumb = (object) [
+        'title' => 'Edit Nilai Alternatif',
+        'list' => ['Home', 'Edit Alternatif']
+    ];
+
+    $page = (object) [
+        'title' => 'Edit  Nilai Alternatif'
+    ];
+
+    $activeMenu = 'hasil'; //set menu yang aktif
+    $pengaduan = PengaduanModel::with('jenis_pengaduan', 'users', 'nilaiAlternatif')->find($id);
+    $kriteriaList = Kriteria::with('subKriteria')->get();
+
+    return view('admin.prioritas.editAlternatif', [
+        'pengaduan' => $pengaduan,
+        'breadcrumb' => $breadcrumb,
+        'page' => $page,
+        'activeMenu' => $activeMenu,
+        'pengaduan_nama' => $pengaduan->jenis_pengaduan->pengaduan_nama,
+        'nama' => $pengaduan->users->nama,
+        'deskripsi' => $pengaduan->deskripsi,
+        'bukti_foto' => $pengaduan->bukti_foto,
+        'kriteriaList' => $kriteriaList,
+    ]);
+}
+
+public function updateNilaiAlternatif(Request $request, $id)
+{
+    $this->validate($request, [
+        'sub_kriteria' => 'required|array',
+    ]);
+
+    $pengaduan = PengaduanModel::findOrFail($id);
+
+    foreach ($request->input('sub_kriteria') as $kriteriaId => $subKriteriaValue) {
+        // Cek apakah sudah ada record nilai alternatif untuk kriteria tersebut
+        $nilaiAlternatif = PenilaianAlternatif::where('id_pengaduan', $id)
+                            ->where('kriteria_id', $kriteriaId)
+                            ->first();
+
+        if ($nilaiAlternatif) {
+            // Jika sudah ada, update nilai
+            $nilaiAlternatif->update(['nilai' => $subKriteriaValue]);
+        } else {
+            // Jika belum ada, buat record baru
+            PenilaianAlternatif::create([
+                'id_pengaduan' => $id,
+                'kriteria_id' => $kriteriaId,
+                'nilai' => $subKriteriaValue,
+            ]);
+        }
+    }
+
+    return redirect('/hasil/accepted')->with('success', 'Nilai alternatif berhasil diperbarui.');
+}
+
+
     public function show($id)
 {   
     try {

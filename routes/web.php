@@ -200,6 +200,8 @@ Route::group(['middleware' => ['auth', 'cek_login:2']], function () {
         Route::get('/accepted', [PrioritasController::class, 'index']);
         Route::post('/list', [PrioritasController::class, 'listAcceptedPengaduan']);
         Route::get('/detail/{id}', [PrioritasController::class, 'showPengaduan']);
+        Route::get('/edit-nilai/{id}', [PrioritasController::class, 'editNilaiAlternatif'])->name('edit-nilai-alternatif');
+        Route::post('/update-nilai/{id}', [PrioritasController::class, 'updateNilaiAlternatif'])->name('update-nilai-alternatif');
         Route::get('/{id}', [PrioritasController::class, 'show']);
         Route::post('/update_status_pengaduan/{id}', [PrioritasController::class, 'updateStatus'])->name('update_status_pengaduan2');
 
