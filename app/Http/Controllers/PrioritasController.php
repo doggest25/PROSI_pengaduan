@@ -970,7 +970,6 @@ public function updateNilaiAlternatif(Request $request, $id)
 {   
     try {
         $detail = PengaduanModel::findOrFail($id);
-        $penilaian = PenilaianAlternatif::findOrFail($id);
     } catch (ModelNotFoundException $e) {
         // Jika data tidak ditemukan, redirect atau tampilkan pesan kesalahan
         return redirect()->back()->with('error', 'Data pengaduan tidak ditemukan.');
@@ -988,7 +987,7 @@ public function updateNilaiAlternatif(Request $request, $id)
 
     $activeMenu = 'dpengaduan'; //set menu yang aktif
 
-    return view('admin.prioritas.detail_prioritas', ['breadcrumb' => $breadcrumb, 'page' => $page, 'detail' => $detail, 'penilaian' => $penilaian, 'activeMenu' => $activeMenu,'status_pengaduan' => $status_pengaduan]);
+    return view('admin.prioritas.detail_prioritas', ['breadcrumb' => $breadcrumb, 'page' => $page, 'detail' => $detail, 'activeMenu' => $activeMenu,'status_pengaduan' => $status_pengaduan]);
 }
 
 public function updateStatus(Request $request, $id)
