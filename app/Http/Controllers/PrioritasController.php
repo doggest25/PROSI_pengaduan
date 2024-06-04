@@ -112,9 +112,17 @@ $cr = round($ci / $ri[$n - 1], 3);
 // Mengambil data dari tabel yang relevan
 $alternatif = PengaduanModel::with('jenis_pengaduan')->get();
 $penilaianAlternatif = PenilaianAlternatif::all();
-
+$pengaduanList = PengaduanModel::with(['users', 'jenis_pengaduan', 'hasil_prioritas'])
+->whereHas('status_pengaduan', function ($query) {
+    $query->where('status_kode', 'ACCEPT');
+})
+->whereHas('hasil_prioritas', function ($query) {
+    $query->whereNotNull('final_score');
+    $query->orderBy('final_score', 'desc');
+})
+->get();
 // Jumlah alternatif dan kriteria
-$m = count($alternatif);
+$m = count($pengaduanList);
 $k = count($kriteria);
 
 // Membentuk matriks keputusan awal
@@ -749,9 +757,17 @@ $cr = round($ci / $ri[$n - 1], 3);
 // Mengambil data dari tabel yang relevan
 $alternatif = PengaduanModel::with('jenis_pengaduan')->get();
 $penilaianAlternatif = PenilaianAlternatif::all();
-
+$pengaduanList = PengaduanModel::with(['users', 'jenis_pengaduan', 'hasil_prioritas'])
+->whereHas('status_pengaduan', function ($query) {
+    $query->where('status_kode', 'ACCEPT');
+})
+->whereHas('hasil_prioritas', function ($query) {
+    $query->whereNotNull('final_score');
+    $query->orderBy('final_score', 'desc');
+})
+->get();
 // Jumlah alternatif dan kriteria
-$m = count($alternatif);
+$m = count($pengaduanList);
 $k = count($kriteria);
 
 // Membentuk matriks keputusan awal
