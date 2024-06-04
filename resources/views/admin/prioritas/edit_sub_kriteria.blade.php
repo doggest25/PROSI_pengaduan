@@ -54,8 +54,9 @@
 
             <button type="submit" class="btn btn-primary">Simpan</button>
         </form>
-        <a href="{{ url()->previous() }}" class="btn btn-secondary mt-3">Kembali</a>
+        
     </div>
+    <a href="{{ url('prioritas/kriteria') }}" class="btn btn-secondary mt-3">Kembali</a>
 </div>
 
 

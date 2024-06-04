@@ -491,12 +491,12 @@ public function destroyKriteria($id)
     {
         // Menampilkan halaman awal 
         $breadcrumb = (object) [
-            'title' => ' Pengaduan diterima',
+            'title' => 'Mengisi Nilai alternatif',
             'list' => ['Home', 'Pengaduan diterima ']
         ];
 
         $page = (object) [
-            'title' => 'Daftar Pengaduan yang diterima dalam sistem'
+            'title' => 'Daftar Pengaduan dengan status "Diterima" yang belum memiliki nilai alternatif'
         ];
 
         $activeMenu = 'diterima'; //set menu yang aktif
@@ -660,12 +660,12 @@ public function index()
     {
         // Menampilkan halaman awal user
         $breadcrumb = (object) [
-            'title' => 'Daftar prioritas',
+            'title' => 'Hasil Ranking Perhitungan',
             'list' => ['Home', 'Hasil Prioritas']
         ];
 
         $page = (object) [
-            'title' => 'Daftar  perhitungan prioritas yang terdaftar dalam sistem'
+            'title' => 'Daftar  ranking berdasarkan final score tertinggi'
         ];
 
         $activeMenu = 'hasil'; //set menu yang aktif
@@ -970,6 +970,7 @@ public function updateNilaiAlternatif(Request $request, $id)
 {   
     try {
         $detail = PengaduanModel::findOrFail($id);
+        $penilaian = PenilaianAlternatif::findOrFail($id);
     } catch (ModelNotFoundException $e) {
         // Jika data tidak ditemukan, redirect atau tampilkan pesan kesalahan
         return redirect()->back()->with('error', 'Data pengaduan tidak ditemukan.');
@@ -987,7 +988,7 @@ public function updateNilaiAlternatif(Request $request, $id)
 
     $activeMenu = 'dpengaduan'; //set menu yang aktif
 
-    return view('admin.prioritas.detail_prioritas', ['breadcrumb' => $breadcrumb, 'page' => $page, 'detail' => $detail, 'activeMenu' => $activeMenu,'status_pengaduan' => $status_pengaduan]);
+    return view('admin.prioritas.detail_prioritas', ['breadcrumb' => $breadcrumb, 'page' => $page, 'detail' => $detail, 'penilaian' => $penilaian, 'activeMenu' => $activeMenu,'status_pengaduan' => $status_pengaduan]);
 }
 
 public function updateStatus(Request $request, $id)

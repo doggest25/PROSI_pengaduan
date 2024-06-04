@@ -17,6 +17,7 @@
             <tr>
                 <th>ID</th>
                 <td>{{ $detail->id_pengaduan }}</td>
+                
             </tr>
             <tr>
                 <th>Nama</th>
@@ -50,14 +51,8 @@
                 <th>Diperbaharui</th>
                 <td>{{ $detail->updated_at }}</td>
             </tr>
-            <tr>
-                <th>Bukti file</th>
-                <td>
-                    <img src="{{ asset('storage/bukti_foto/' . basename($detail->bukti_foto)) }}" alt="Bukti Foto Pengaduan">
-
-                </td>
-            </tr>
             
+
             <tr>
                 <th>Status Pengaduan</th>
                 <td>
@@ -78,6 +73,13 @@
                 </td>
             </tr>
         </table>
+        <tr>
+            <th>Bukti file</th>
+            <td>
+                <img src="{{ asset('storage/bukti_foto/' . basename($detail->bukti_foto)) }}" alt="Bukti Foto Pengaduan" style="width:400px; height:400px;">
+
+            </td>
+        </tr>
         @endempty
         <a href="{{ url('hasil/accepted') }}" class="btn btn-sm btn-default mt-2">Kembali</a>
     </div>

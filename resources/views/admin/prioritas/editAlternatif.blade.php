@@ -64,7 +64,9 @@
 
             <button type="submit" class="btn btn-primary">Simpan</button>
         </form>
+        
     </div>
+    <a href="{{ url('hasil/accepted') }}" class="btn btn-secondary mt-3">Kembali</a>
 </div>
 @endsection
 
