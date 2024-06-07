@@ -982,15 +982,20 @@ public function updateNilaiAlternatif(Request $request, $id)
 }
 
 
-    public function show($id)
-{   
+public function show($id)
+{
     try {
-        $detail = PengaduanModel::findOrFail($id);
+        $detail = PengaduanModel::with([
+            'nilaiAlternatif.kriteria',
+            'nilaiAlternatif.subKriteria',
+            'users', // Assuming user relationship exists
+            'jenis_pengaduan' // Assuming jenis_pengaduan relationship exists
+        ])->findOrFail($id);
     } catch (ModelNotFoundException $e) {
-        // Jika data tidak ditemukan, redirect atau tampilkan pesan kesalahan
         return redirect()->back()->with('error', 'Data pengaduan tidak ditemukan.');
     }
-    $status_pengaduan = StatusPengaduanModel::all(); // Retrieve all status pengaduan
+
+    $status_pengaduan = StatusPengaduanModel::all();
 
     $breadcrumb = (object) [
         'title' => 'Detail Pengaduan',
@@ -1001,25 +1006,42 @@ public function updateNilaiAlternatif(Request $request, $id)
         'title' => 'Detail Pengaduan'
     ];
 
-    $activeMenu = 'dpengaduan'; //set menu yang aktif
+    $activeMenu = 'hasil';
 
-    return view('admin.prioritas.detail_prioritas', ['breadcrumb' => $breadcrumb, 'page' => $page, 'detail' => $detail, 'activeMenu' => $activeMenu,'status_pengaduan' => $status_pengaduan]);
+    return view('admin.prioritas.detail_prioritas', [
+        'breadcrumb' => $breadcrumb,
+        'page' => $page,
+        'detail' => $detail,
+        'activeMenu' => $activeMenu,
+        'status_pengaduan' => $status_pengaduan
+    ]);
 }
+
+
 
 public function updateStatus(Request $request, $id)
 {
     $pengaduan = PengaduanModel::findOrFail($id);
 
-    // Cari ID status pengaduan berdasarkan nama
-    $idStatus = StatusPengaduanModel::where('status_nama', $request->status_pengaduan)->first()->id_status_pengaduan;
-    
-    // Simpan ID status pengaduan ke dalam data pengaduan
-    $pengaduan->id_status_pengaduan = $idStatus;
-    $pengaduan->save();
+    // Debugging: Print the status name from the request
+    // dd($request->status_pengaduan);
 
-    // Redirect atau respons lainnya
-    return redirect('hasil/accepted')->with('success', 'Status pengaduan berhasil diperbarui.');
+    // Cari ID status pengaduan berdasarkan nama
+    $status = StatusPengaduanModel::where('status_nama', $request->status_pengaduan)->first();
+
+    if ($status) {
+        // Simpan ID status pengaduan ke dalam data pengaduan
+        $pengaduan->id_status_pengaduan = $status->id_status_pengaduan;
+        $pengaduan->save();
+
+        // Redirect atau respons lainnya
+        return redirect('hasil/accepted')->with('success', 'Status pengaduan berhasil diperbarui.');
+    } else {
+        // Handle the case where the status is not found
+        return redirect()->back()->with('error', 'Status pengaduan tidak ditemukan.');
+    }
 }
+
 
 
 }

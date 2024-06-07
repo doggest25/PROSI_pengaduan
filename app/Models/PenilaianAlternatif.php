@@ -16,7 +16,11 @@ class PenilaianAlternatif extends Model
         'kriteria_id',
         'nilai',
     ];
-
+    public function subKriteria()
+    {
+        return $this->belongsTo(SubKriteria::class, 'nilai', 'value')
+                    ->whereColumn('kriteria_id', 'kriteria_id');
+    }
     public function nilaiAlternatif()
 {
     return $this->hasMany(PenilaianAlternatif::class, 'id_pengaduan');
