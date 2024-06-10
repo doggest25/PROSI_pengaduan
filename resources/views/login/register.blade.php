@@ -1,4 +1,5 @@
 @include('login.template')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,8 +8,25 @@
   <title>Peduli | Registration </title>
   <link rel="icon" href="{{ asset('adminlte/logo/page.png')}}" type="image/png">
 </head>
+
 <body class="hold-transition register-page">
+  
 <div class="register-box">
+  @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+@if(session('success'))
+<div class="alert alert-success"> {{ session('success') }} </div>
+@endif
+@if(session('error'))
+<div class="alert alert-danger"> {{ session('error') }} </div>
+@endif
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
 

@@ -70,16 +70,32 @@ class LoginController extends Controller
 
     public function proses_register(Request $request){
 
-        // kita buat validasi nih buat proses register
-        //validasinya yaitu semua field wajib diisi
-        //validasi username itu harus unique atau tidak bolej duplicate usernamenya
+      
         $validator = Validator::make($request->all(), [
-        'username' => 'required|string|min:3|unique:v_user,username',
-        'nama' => 'required|string|max:100', //nama harus diisi, berupa string, dan maksimal 100 karakter
-        'password' => 'required|min:5', //password harus diisi dan minimal 5 karakter
-        'alamat' => 'required',
-        'ktp' => 'required|integer|min:16',
+            'username' => 'required|string|min:3|unique:v_user,username',
+            'nama' => 'required|string|max:100',
+            'password' => 'required|min:5',
+            'alamat' => 'required',
+            'ktp' => 'required|integer|min:1000000000000000|max:9999999999999999',
+        ], [
+            'username.required' => 'Username harus diisi.',
+            'username.string' => 'Username harus berupa string.',
+            'username.min' => 'Username minimal terdiri dari :min karakter.',
+            'username.unique' => 'Username sudah digunakan.',
+            'nama.required' => 'Nama harus diisi.',
+            'nama.string' => 'Nama harus berupa string.',
+            'nama.max' => 'Nama maksimal terdiri dari :max karakter.',
+            'password.required' => 'Password harus diisi.',
+            'password.min' => 'Password minimal terdiri dari :min karakter.',
+            'alamat.required' => 'Alamat harus diisi.',
+            'ktp.required' => 'Nomor KTP harus diisi.',
+            'ktp.integer' => 'Nomor KTP harus berupa angka.',
+            'ktp.min' => 'Nomor KTP minimal terdiri dari 16 angka.',
+            'ktp.max' => 'Nomor KTP maksimal terdiri dari 16 angka.',
         ]);
+        
+       
+        
 
         //kalau gagal kembali ke halaman register dengan munculnya pesan error
         if($validator->fails()) {
@@ -95,7 +111,7 @@ class LoginController extends Controller
         UserModel::create($request->all());
 
         //kalo berhasil arahkan ke halaman login
-        return redirect()->route('login');
+        return redirect()->route('login')->with('success', 'Akun berhasil berhasil dibuat');
     }
 
     public function logout(Request $request){
