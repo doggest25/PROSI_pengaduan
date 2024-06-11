@@ -154,7 +154,7 @@ foreach ($decisionMatrix as $id_pengaduan => $row) {
             }
         } elseif ($kriteriaItem->jenis == 'cost') {
             if ($maxValue != $minValue) {
-                $normalizedRow[$key] = ($maxValue - $value) / ($maxValue - $minValue);
+                $normalizedRow[$key] = ($value - $maxValue ) / ($minValue - $maxValue  );
             } else {
                 $normalizedRow[$key] = 0;
             }
@@ -799,7 +799,7 @@ foreach ($decisionMatrix as $id_pengaduan => $row) {
             }
         } elseif ($kriteriaItem->jenis == 'cost') {
             if ($maxValue != $minValue) {
-                $normalizedRow[$key] = ($maxValue - $value) / ($maxValue - $minValue);
+                $normalizedRow[$key] = ($value - $maxValue ) / ($minValue - $maxValue  );
             } else {
                 $normalizedRow[$key] = 0;
             }
@@ -920,7 +920,7 @@ foreach ($finalScores as $id_pengaduan => $finalScore) {
         ->rawColumns(['aksi'])
         ->make(true);
 }
-// app/Http/Controllers/PengaduanController.php
+
 
 public function editNilaiAlternatif($id)
 {
@@ -977,7 +977,202 @@ public function updateNilaiAlternatif(Request $request, $id)
             ]);
         }
     }
+// AHP Calculation
 
+// Mendapatkan dan mengurutkan kriteria berdasarkan id
+$kriteria = Kriteria::orderBy('id')->get();
+$perbandinganKriteria = PerbandinganKriteria::all();
+
+// Membuat Matriks Perbandingan Berpasangan
+$n = count($kriteria);
+$pairwiseMatrix = array_fill(0, $n, array_fill(0, $n, 1.0));
+
+// Membuat mapping id kriteria ke indeks matriks
+$kriteriaMap = [];
+foreach ($kriteria as $index => $k) {
+    $kriteriaMap[$k->id] = $index;
+}
+
+foreach ($perbandinganKriteria as $perbandingan) {
+    $i = $kriteriaMap[$perbandingan->kriteria_1_id];
+    $j = $kriteriaMap[$perbandingan->kriteria_2_id];
+    $nilai = $perbandingan->nilai_perbandingan;
+    $pairwiseMatrix[$i][$j] = $nilai;
+    $pairwiseMatrix[$j][$i] = 1 / $nilai;
+}
+
+// Menghitung Jumlah Kolom
+$columnSums = array_fill(0, $n, 0.0);
+for ($j = 0; $j < $n; $j++) {
+    for ($i = 0; $i < $n; $i++) {
+        $columnSums[$j] += $pairwiseMatrix[$i][$j];
+    }
+}
+
+// Normalisasi Matriks
+$normalizedMatrix = array_fill(0, $n, array_fill(0, $n, 0.0));
+for ($i = 0; $i < $n; $i++) {
+    for ($j = 0; $j < $n; $j++) {
+        $normalizedMatrix[$i][$j] = $pairwiseMatrix[$i][$j] / $columnSums[$j];
+    }
+}
+
+// Menghitung Rata-rata Baris (Eigenvector)
+$eigenVector = array_fill(0, $n, 0.0);
+for ($i = 0; $i < $n; $i++) {
+    $sum = 0.0;
+    for ($j = 0; $j < $n; $j++) {
+        $sum += $normalizedMatrix[$i][$j];
+    }
+    $eigenVector[$i] = round($sum / $n, 3); // Mengambil 3 angka di belakang koma
+}
+
+// Mapping eigenvector values to criteria IDs
+$eigenVectorMapped = [];
+foreach ($kriteria as $index => $k) {
+    $eigenVectorMapped[$k->id] = $eigenVector[$index];
+}
+
+// Menghitung λ_max
+$lambdaMax = 0.0;
+for ($i = 0; $i < $n; $i++) {
+    $sum = 0.0;
+    for ($j = 0; $j < $n; $j++) {
+        $sum += $pairwiseMatrix[$i][$j] * $eigenVector[$j];
+    }
+    $lambdaMax += $sum / $eigenVector[$i];
+}
+$lambdaMax = round($lambdaMax / $n, 3); // Mengambil 3 angka di belakang koma
+
+// Menghitung CI
+$ci = round(($lambdaMax - $n) / ($n - 1), 3);
+
+// Menghitung CR
+$ri = [0.0, 0.0, 0.58, 0.90, 1.12, 1.24, 1.32, 1.41, 1.45];
+$cr = round($ci / $ri[$n - 1], 3);
+
+// MABAC Calculation
+
+// Mengambil data dari tabel yang relevan
+$alternatif = PengaduanModel::with('jenis_pengaduan')->get();
+$penilaianAlternatif = PenilaianAlternatif::all();
+$pengaduanList = PengaduanModel::with(['users', 'jenis_pengaduan', 'hasil_prioritas'])
+->whereHas('status_pengaduan', function ($query) {
+    $query->where('status_kode', 'ACCEPT');
+})
+->whereHas('hasil_prioritas', function ($query) {
+    $query->whereNotNull('final_score');
+    $query->orderBy('final_score', 'desc');
+})
+->get();
+// Jumlah alternatif dan kriteria
+$m = count($pengaduanList);
+$k = count($kriteria);
+
+// Membentuk matriks keputusan awal
+$decisionMatrix = [];
+foreach ($penilaianAlternatif as $penilaian) {
+    $decisionMatrix[$penilaian->id_pengaduan][$penilaian->kriteria_id] = $penilaian->nilai;
+}
+
+// Normalisasi elemen matriks
+$normalizedMatrix = [];
+foreach ($decisionMatrix as $id_pengaduan => $row) {
+    $normalizedRow = [];
+    foreach ($row as $key => $value) {
+        $kriteriaItem = $kriteria->find($key);
+
+        if (!$kriteriaItem) {
+            continue; // Lewati jika kriteria tidak ditemukan
+        }
+
+        $columnValues = array_column($decisionMatrix, $key);
+        $maxValue = max($columnValues);
+        $minValue = min($columnValues);
+
+        if ($kriteriaItem->jenis == 'benefit') {
+            if ($maxValue != $minValue) {
+                $normalizedRow[$key] = ($value - $minValue) / ($maxValue - $minValue);
+            } else {
+                $normalizedRow[$key] = 0;
+            }
+        } elseif ($kriteriaItem->jenis == 'cost') {
+            if ($maxValue != $minValue) {
+                $normalizedRow[$key] = ($value - $maxValue ) / ($minValue - $maxValue  );
+            } else {
+                $normalizedRow[$key] = 0;
+            }
+        } else {
+            // Tambahkan penanganan kesalahan jika jenis kriteria tidak valid
+            throw new Exception("Jenis kriteria tidak valid: " . $kriteriaItem->jenis);
+        }
+    }
+    $normalizedMatrix[$id_pengaduan] = $normalizedRow;
+}
+
+// Matriks tertimbang
+$weightedMatrix = [];
+foreach ($normalizedMatrix as $id_pengaduan => $row) {
+    $weightedRow = [];
+    foreach ($row as $key => $value) {
+        if (!isset($eigenVectorMapped[$key])) {
+            // Handle missing key in eigenVector
+            throw new Exception("Missing key in eigenVector: " . $key);
+        }
+        $weightedRow[$key] = round(($value * $eigenVectorMapped[$key]) + $eigenVectorMapped[$key], 3); // Mengambil 3 angka di belakang koma
+    }
+    $weightedMatrix[$id_pengaduan] = $weightedRow;
+}
+
+// Matriks area perkiraan perbatasan
+$gMatrix = array_fill_keys(array_keys($eigenVectorMapped), 1); // Initialize $gMatrix with the keys from $eigenVectorMapped
+
+foreach ($weightedMatrix as $row) {
+    foreach ($row as $key => $value) {
+        if (!isset($gMatrix[$key])) {
+            // Handle invalid key
+            throw new Exception("Invalid key in weightedMatrix: " . $key);
+        }
+        $gMatrix[$key] *= $value; // Perkalian nilai elemen dalam kolom
+    }
+}
+
+// Menghitung rata-rata geometris
+$gMatrix = array_map(function($val) use ($m) {
+    return round(pow($val, 1 / $m), 3); // Mengambil 3 angka di belakang koma
+}, $gMatrix);
+
+// Matriks jarak alternatif
+$qMatrix = [];
+foreach ($weightedMatrix as $id_pengaduan => $row) {
+    $qRow = [];
+    foreach ($row as $key => $value) {
+        if (!isset($gMatrix[$key])) {
+            // Handle invalid key
+            throw new Exception("Invalid key in gMatrix: " . $key);
+        }
+        $qRow[$key] = round($value - $gMatrix[$key], 3); // Mengambil 3 angka di belakang koma
+    }
+    $qMatrix[$id_pengaduan] = $qRow;
+}
+
+// Hasil akhir MABAC
+$finalScores = [];
+foreach ($qMatrix as $id_pengaduan => $row) {
+    $finalScores[$id_pengaduan] = round(array_sum($row), 3); // Mengambil 3 angka di belakang koma
+}
+
+// Mengurutkan $finalScores dari yang terbesar ke yang terkecil
+arsort($finalScores);
+
+
+// Menyimpan hasil akhir ke database
+foreach ($finalScores as $id_pengaduan => $finalScore) {
+    HasilPrioritas::updateOrCreate(
+        ['id_pengaduan' => $id_pengaduan],
+        ['final_score' => $finalScore]
+    );
+}
     return redirect('/hasil/accepted')->with('success', 'Nilai alternatif berhasil diperbarui.');
 }
 
@@ -996,7 +1191,16 @@ public function show($id)
     }
 
     $status_pengaduan = StatusPengaduanModel::all();
+// Calculate ranking
+$allPengaduans = PengaduanModel::with('hasil_prioritas')
+->whereHas('hasil_prioritas')
+->get()
+->sortByDesc('hasil_prioritas.final_score')
+->values();
 
+$rank = $allPengaduans->search(function ($pengaduan) use ($detail) {
+return $pengaduan->id_pengaduan == $detail->id_pengaduan;
+}) + 1;
     $breadcrumb = (object) [
         'title' => 'Detail Pengaduan',
         'list' => ['Home', 'Pengaduan', 'Detail']
@@ -1013,6 +1217,8 @@ public function show($id)
         'page' => $page,
         'detail' => $detail,
         'activeMenu' => $activeMenu,
+        'rank' => $rank,
+        'total' => $allPengaduans->count(),
         'status_pengaduan' => $status_pengaduan
     ]);
 }
